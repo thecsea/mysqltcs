@@ -18,9 +18,9 @@
  */
 
 namespace it\thecsea\mysqlTCS;
-use it\thecsea\mysqlTCS\connections\MysqlConnections;
 use it\thecsea\mysqlTCS\connections\MysqlConnection;
-use it\thecsea\mysqlTCS\connections\MysqlConnectionsException;
+use it\thecsea\mysqlTCS\connections\MysqlConnectionException;
+use it\thecsea\mysqlTCS\connections\MysqlConnections;
 
 
 /**
@@ -101,6 +101,9 @@ class MysqlTCS {
             MysqlConnections::removeClient($this);
 
     }
+
+
+
 
     /**
      * Get the connection according to newConnection value

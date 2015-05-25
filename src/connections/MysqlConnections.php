@@ -21,8 +21,7 @@ namespace it\thecsea\mysqlTCS\connections;
 
 
 use it\thecsea\mysqlTCS\MysqlTCS;
-use it\thecsea\mysqlTCS\MysqlConnectionException;
-use it\thecsea\mysqlTCS\MysqlConnection;
+
 
 /**
  * Class MysqlConnections
@@ -30,9 +29,14 @@ use it\thecsea\mysqlTCS\MysqlConnection;
  */
 class MysqlConnections {
     /**
-     * @var array
+     * @var MysqlConnection[]
      */
     static private $connections = array();
+
+    /**
+     * @var MysqlTCS[]
+     */
+    static private $clients = array();
 
     /**
      * Get a connection; new or old, we don't know this
@@ -49,14 +53,15 @@ class MysqlConnections {
      */
     static public function getConnection(MysqlTCS $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
         //the client has already a connection
-        if(isset(self::$connections[$client]))
+        $clientKey = array_search ($client,self::$clients);
+        if($clientKey !== false)
             throw new MysqlConnectionException("The client has already a connection, it must remove it before");
 
         //I get an existing connection or I create a new one
-        self::$connections[$client] = self::findConnection($host, $user, $password, $name, $key, $cert, $ca);
+        self::$connections[$clientKey] = self::findConnection($host, $user, $password, $name, $key, $cert, $ca);
 
         //return connection
-        return self::$connections[$client]->getMysqli();
+        return self::$connections[$clientKey]->getMysqli();
     }
 
     /**
@@ -65,12 +70,14 @@ class MysqlConnections {
      */
     static public function removeClient(MysqlTCS $client){
         //the client doesn't exist
-        if(!isset(self::$connections[$client]))
+        $clientKey = array_search ($client,self::$clients);
+        if($clientKey === false)
             throw new MysqlConnectionException("The client doesn't exist");
 
         //remove client
-        unset(self::$connections[$client]);
-        //since php ha garbage collection when we have removed all clients, the mysqli connection is closed automatically
+        unset(self::$connections[$clientKey]);
+        unset(self::$clients[$clientKey]);
+        //since php has garbage collection when we have removed all clients, the mysqli connection is closed automatically
     }
 
     /**
