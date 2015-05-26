@@ -61,6 +61,8 @@ class MysqlConnections {
         self::$connections[$clientKey] = self::findConnection($host, $user, $password, $name, $key, $cert, $ca);
 
         //return connection
+        $clientKey = count(self::$clients);
+        self::$clients[$clientKey] = $client;
         return self::$connections[$clientKey]->getMysqli();
     }
 
