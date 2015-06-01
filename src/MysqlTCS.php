@@ -69,6 +69,11 @@ class MysqlTCS {
     private $mysqlRef;
 
     /**
+     * @var MysqlConnections
+     */
+    private $mysqlConnections;
+
+    /**
      * Get a connection to mysql
      * @param String $host
      * @param String $user
@@ -89,6 +94,7 @@ class MysqlTCS {
         $this->key = $key;
         $this->cert = $cert;
         $this->ca = $ca;
+        $this->mysqlConnections = MysqlConnections::getInstance();
         $this->getConnection();
     }
 
@@ -98,12 +104,9 @@ class MysqlTCS {
     public function __destruct()
     {
         if(!$this->newConnection)
-            MysqlConnections::removeClient($this);
+            $this->mysqlConnections->removeClient($this);
 
     }
-
-
-
 
     /**
      * Get the connection according to newConnection value
@@ -118,7 +121,7 @@ class MysqlTCS {
         }
         else
         {
-            $this->mysqlRef = MysqlConnections::getConnection($this, $this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
+            $this->mysqlRef = $this->mysqlConnections->getConnection($this, $this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }
     }
 

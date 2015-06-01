@@ -31,12 +31,47 @@ class MysqlConnections {
     /**
      * @var MysqlConnection[]
      */
-    static private $connections = array();
+    private $connections = array();
 
     /**
      * @var MysqlTCS[]
      */
-    static private $clients = array();
+    private $clients = array();
+
+
+    /**
+     * @var MysqlConnections
+     */
+    static private $instance = null;
+
+    /**
+     * Empty private construct (for singleton)
+     */
+    private function __construct()
+    {
+    }
+
+    /**
+     *Empty private clone (for singleton)
+     */
+    private function __clone()
+    {
+    }
+
+    /**
+     * Get singleton instance
+     * @return MysqlConnections
+     */
+    public static function getInstance()
+    {
+        if(self::$instance == null)
+        {
+            $c = __CLASS__;
+            self::$instance = new $c;
+        }
+
+        return self::$instance;
+    }
 
     /**
      * Get a connection; new or old, we don't know this
@@ -51,34 +86,34 @@ class MysqlConnections {
      * @return \mysqli
      * @throws MysqlConnectionException
      */
-    static public function getConnection(MysqlTCS $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
+    public function getConnection(MysqlTCS $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
         //the client has already a connection
-        $clientKey = array_search ($client,self::$clients);
+        $clientKey = array_search ($client,$this->clients);
         if($clientKey !== false)
             throw new MysqlConnectionException("The client has already a connection, it must remove it before");
 
         //I get an existing connection or I create a new one
-        self::$connections[$clientKey] = self::findConnection($host, $user, $password, $name, $key, $cert, $ca);
+        $this->connections[$clientKey] = $this->findConnection($host, $user, $password, $name, $key, $cert, $ca);
 
         //return connection
-        $clientKey = count(self::$clients);
-        self::$clients[$clientKey] = $client;
-        return self::$connections[$clientKey]->getMysqli();
+        $clientKey = count($this->clients);
+        $this->clients[$clientKey] = $client;
+        return $this->connections[$clientKey]->getMysqli();
     }
 
     /**
      * @param MysqlTCS $client
      * @throws MysqlConnectionException
      */
-    static public function removeClient(MysqlTCS $client){
+    public function removeClient(MysqlTCS $client){
         //the client doesn't exist
-        $clientKey = array_search ($client,self::$clients);
+        $clientKey = array_search ($client,$this->clients);
         if($clientKey === false)
             throw new MysqlConnectionException("The client doesn't exist");
 
         //remove client
-        unset(self::$connections[$clientKey]);
-        unset(self::$clients[$clientKey]);
+        unset($this->connections[$clientKey]);
+        unset($this->clients[$clientKey]);
         //since php has garbage collection when we have removed all clients, the mysqli connection is closed automatically
     }
 
@@ -93,9 +128,9 @@ class MysqlConnections {
      * @param string $ca
      * @return MysqlConnection
      */
-    static private function findConnection($host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
+    private function findConnection($host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
         //search a connection
-        foreach(self::$connections as /** @var MysqlConnection */ $connection){
+        foreach($this->connections as /** @var MysqlConnection */ $connection){
             if($connection->equalsProperties($host, $user, $password, $name, $key, $cert, $ca))
                 return $connection;
         }
