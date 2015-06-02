@@ -22,6 +22,8 @@ namespace it\thecsea\mysqlTCS\connections;
 
 /**
  * Class MysqlConnectionException
+ * @author      Claudio Cardinale <cardi@thecsea.it>
+ * @version     3.0-dev
  * @package it\thecsea\mysqlTCS\connections
  */
 class MysqlConnectionException  extends \Exception{}
