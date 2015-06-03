@@ -23,6 +23,7 @@ namespace it\thecsea\mysqlTCS\connections;
 /**
  * Class MysqlConnectionException
  * @author      Claudio Cardinale <cardi@thecsea.it>
+ * @copyright   2015 claudio cardinale
  * @version     3.0-dev
  * @package it\thecsea\mysqlTCS\connections
  */
