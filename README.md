@@ -6,7 +6,7 @@ Clone repository
 
 `git clone https://github.com/thecsea/mysqlTCS.git`
 
-Execute composer
+Execute composer (download composer here https://getcomposer.org/)
 
 `php composer.phar install`
 
