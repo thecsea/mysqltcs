@@ -95,11 +95,13 @@ class MysqlConnections {
         if($clientKey !== false)
             throw new MysqlConnectionException("The client has already a connection, it must remove it before");
 
+        //get new key
+        $clientKey = count($this->clients);
+
         //I get an existing connection or I create a new one
         $this->connections[$clientKey] = $this->findConnection($host, $user, $password, $name, $key, $cert, $ca);
 
         //return connection
-        $clientKey = count($this->clients);
         $this->clients[$clientKey] = $client;
         return $this->connections[$clientKey];
     }

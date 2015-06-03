@@ -126,6 +126,6 @@ class MysqlConnection {
      */
     public function equalsProperties($host, $user, $password, $name, $key = "", $cert = "", $ca = "")
     {
-        return ($this->host == $host && $this->user == $user && $this->password == $password && $this->name == $name &&$this->key == $key && $this->cert = $cert && $this->ca = $ca);
+        return ($this->host == $host && $this->user == $user && $this->password == $password && $this->name == $name && $this->key == $key && $this->cert == $cert && $this->ca == $ca);
     }
 }

@@ -17,4 +17,19 @@ class TestConnnections extends \PHPUnit_Framework_TestCase {
         $connection = new MysqlTCS($db['host'],  $db['user'], $db['psw'], $db['db']);
         $this->assertTrue( $connection->isConnected());
     }
+
+
+    public function testTwoNewConnection(){
+        $db = include(__DIR__."/config.php");
+        $connection = new MysqlTCS($db['host'],  $db['user'], $db['psw'], $db['db']);
+        $connection2 = new MysqlTCS($db['host'],  $db['user'], $db['psw'], $db['db']);
+        $this->assertNotEquals($connection->getConnectionThreadId(), $connection2->getConnectionThreadId());
+    }
+
+    public function testTwoNoNewConnection(){
+        $db = include(__DIR__."/config.php");
+        $connection = new MysqlTCS($db['host'],  $db['user'], $db['psw'], $db['db'],false);
+        $connection2 = new MysqlTCS($db['host'],  $db['user'], $db['psw'], $db['db'], false);
+        $this->assertEquals($connection->getConnectionThreadId(), $connection2->getConnectionThreadId());
+    }
 }

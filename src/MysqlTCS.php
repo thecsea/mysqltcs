@@ -133,4 +133,12 @@ class MysqlTCS {
         return $this->mysqlRef->getMysqli()->ping();
     }
 
+    /**
+     * Get the thread id (it can be used as mysqli identifier)
+     * @return int
+     */
+    public function getConnectionThreadId(){
+        return $this->mysqlRef->getMysqli()->thread_id;
+    }
+
 }
