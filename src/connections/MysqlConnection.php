@@ -128,4 +128,12 @@ class MysqlConnection {
     {
         return ($this->host == $host && $this->user == $user && $this->password == $password && $this->name == $name && $this->key == $key && $this->cert == $cert && $this->ca == $ca);
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return ("host: ".$this->host ."\nuser: ".$this->user ."\npassword: ".$this->password  ."\nname: ".$this->name ."\nkey: ".$this->key ."\ncert: ".$this->cert ."\nca: ".$this->ca);
+    }
 }
