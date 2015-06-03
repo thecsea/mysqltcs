@@ -16,7 +16,7 @@ require_once(__DIR__ . "/../vendor/autoload.php");
  * @version 3.0.0-dev
  * @package it\thecsea\mysqltcs
  */
-class TestExecute extends \PHPUnit_Framework_TestCase
+class ExecuteTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleExecute()
     {

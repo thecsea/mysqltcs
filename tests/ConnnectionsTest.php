@@ -17,7 +17,7 @@ require_once(__DIR__."/../vendor/autoload.php");
  * @version 3.0.0-dev
  * @package it\thecsea\mysqltcs
  */
-class TestConnnections extends \PHPUnit_Framework_TestCase {
+class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
 
     public function testOneConnection()
     {
