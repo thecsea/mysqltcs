@@ -1,0 +1,22 @@
+{
+  "name": "thecsea/mysqlTCS",
+  "description": "A simpel class to access to a mysql database",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "claudio cardinale",
+      "email": "cardi@thecsea.it"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "it\\thecsea\\mysqlTCS\\": "src/"
+    }
+  },
+  "license": "GPL-2.0"
+
+}

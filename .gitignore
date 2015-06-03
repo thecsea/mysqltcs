@@ -56,7 +56,7 @@ $RECYCLE.BIN/
 ### PhpStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
-*.iml
+#*.iml
 
 ## Directory-based project format:
 .idea/
@@ -100,3 +100,8 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
+
+
+
+### Composer ###
+composer.phar
