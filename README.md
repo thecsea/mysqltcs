@@ -1,6 +1,8 @@
 # mysqlTCS
 A simple class for mysql written in php
 
+In this class you can use the same db connection in more than one instances
+
 # Download and install
 Clone repository
 
