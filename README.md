@@ -2,10 +2,14 @@
 A simple class for mysql written in php
 
 # Download and install
-clone repository
+Clone repository
 
 `git clone https://github.com/thecsea/mysqlTCS.git`
 
-execute composer
+Execute composer
 
 `php composer.phar install`
+
+
+# Tests
+Change db data in `test/config`
