@@ -15,3 +15,5 @@ Execute composer (download composer here https://getcomposer.org/)
 
 # Tests
 Change db data in `test/config`
+
+# By [thecsea.it](http://www.thecsea.it)
