@@ -24,9 +24,9 @@ use it\thecsea\mysqltcs\connections\utilis\MysqlUtilis;
 
 /**
  * Class MysqlConnection
- * @author      Claudio Cardinale <cardi@thecsea.it>
- * @copyright   2015 claudio cardinale
- * @version     3.0-dev
+ * @author Claudio Cardinale <cardi@thecsea.it>
+ * @copyright 2015 claudio cardinale
+ * @version 3.0.0-dev
  * @package     it\thecsea\mysqltcs\connections
  */
 class MysqlConnection {
