@@ -28,7 +28,7 @@ use it\thecsea\mysqltcs\connections\MysqlConnections;
  * @author      Claudio Cardinale <cardi@thecsea.it>
  * @copyright   2015 claudio cardinale
  * @version     3.0-dev
- * @package it\thecsea\mysqltcs
+ * @package     it\thecsea\mysqltcs
  */
 class Mysqltcs {
 

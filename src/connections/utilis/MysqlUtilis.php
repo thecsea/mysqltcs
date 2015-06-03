@@ -27,7 +27,7 @@ use it\thecsea\mysqltcs\connections\MysqlConnectionException;
  * @author      Claudio Cardinale <cardi@thecsea.it>
  * @copyright   2015 claudio cardinale
  * @version     3.0-dev
- * @package it\thecsea\mysqltcs\connections\utilis
+ * @package     it\thecsea\mysqltcs\connections\utilis
  */
 class MysqlUtilisException extends MysqlConnectionException
 {
