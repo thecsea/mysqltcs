@@ -17,10 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace it\thecsea\mysqlTCS\connections;
+namespace it\thecsea\mysqltcs\connections;
 
 
-use it\thecsea\mysqlTCS\MysqlTCS;
+use it\thecsea\mysqltcs\mysqltcs;
 
 
 /**
@@ -28,7 +28,7 @@ use it\thecsea\mysqlTCS\MysqlTCS;
  * @author      Claudio Cardinale <cardi@thecsea.it>
  * @copyright   2015 claudio cardinale
  * @version     3.0-dev
- * @package it\thecsea\mysqlTCS\connections
+ * @package it\thecsea\mysqltcs\connections
  */
 class MysqlConnections {
     /**
@@ -37,7 +37,7 @@ class MysqlConnections {
     private $connections = array();
 
     /**
-     * @var MysqlTCS[]
+     * @var mysqltcs[]
      */
     private $clients = array();
 
@@ -78,7 +78,7 @@ class MysqlConnections {
 
     /**
      * Get a connection; new or old, we don't know this
-     * @param MysqlTCS $client
+     * @param mysqltcs $client
      * @param string $host
      * @param string $user
      * @param string $password
@@ -89,7 +89,7 @@ class MysqlConnections {
      * @return MysqlConnection
      * @throws MysqlConnectionException
      */
-    public function getConnection(MysqlTCS $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
+    public function getConnection(mysqltcs $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
         //the client has already a connection
         $clientKey = array_search ($client,$this->clients);
         if($clientKey !== false)
@@ -107,10 +107,10 @@ class MysqlConnections {
     }
 
     /**
-     * @param MysqlTCS $client
+     * @param mysqltcs $client
      * @throws MysqlConnectionException
      */
-    public function removeClient(MysqlTCS $client){
+    public function removeClient(mysqltcs $client){
         //the client doesn't exist
         $clientKey = array_search ($client,$this->clients);
         if($clientKey === false)

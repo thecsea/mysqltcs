@@ -17,20 +17,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace it\thecsea\mysqlTCS;
-use it\thecsea\mysqlTCS\connections\MysqlConnection;
-use it\thecsea\mysqlTCS\connections\MysqlConnectionException;
-use it\thecsea\mysqlTCS\connections\MysqlConnections;
+namespace it\thecsea\mysqltcs;
+use it\thecsea\mysqltcs\connections\MysqlConnection;
+use it\thecsea\mysqltcs\connections\MysqlConnectionException;
+use it\thecsea\mysqltcs\connections\MysqlConnections;
 
 
 /**
- * Class MysqlTCS
+ * Class mysqltcs
  * @author      Claudio Cardinale <cardi@thecsea.it>
  * @copyright   2015 claudio cardinale
  * @version     3.0-dev
- * @package it\thecsea\mysqlTCS
+ * @package it\thecsea\mysqltcs
  */
-class MysqlTCS {
+class Mysqltcs {
 
     /**
      * @var String
@@ -126,8 +126,8 @@ class MysqlTCS {
     }
 
     /**
-     * Get if mysqlTCS is connected (using mysqli::ping)
-     * @return bool if true mysqlTCS is connected
+     * Get if mysqltcs is connected (using mysqli::ping)
+     * @return bool if true mysqltcs is connected
      */
     public function isConnected(){
         return $this->mysqlRef->getMysqli()->ping();

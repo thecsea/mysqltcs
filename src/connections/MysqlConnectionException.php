@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace it\thecsea\mysqlTCS\connections;
+namespace it\thecsea\mysqltcs\connections;
 
 
 /**
@@ -25,6 +25,6 @@ namespace it\thecsea\mysqlTCS\connections;
  * @author      Claudio Cardinale <cardi@thecsea.it>
  * @copyright   2015 claudio cardinale
  * @version     3.0-dev
- * @package it\thecsea\mysqlTCS\connections
+ * @package it\thecsea\mysqltcs\connections
  */
 class MysqlConnectionException  extends \Exception{}

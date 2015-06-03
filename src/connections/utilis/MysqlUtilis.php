@@ -17,17 +17,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace it\thecsea\mysqlTCS\connections\utilis;
+namespace it\thecsea\mysqltcs\connections\utilis;
 
 
-use it\thecsea\mysqlTCS\connections\MysqlConnectionException;
+use it\thecsea\mysqltcs\connections\MysqlConnectionException;
 
 /**
  * Class MysqlUtilisException
  * @author      Claudio Cardinale <cardi@thecsea.it>
  * @copyright   2015 claudio cardinale
  * @version     3.0-dev
- * @package it\thecsea\mysqlTCS\connections\utilis
+ * @package it\thecsea\mysqltcs\connections\utilis
  */
 class MysqlUtilisException extends MysqlConnectionException
 {
@@ -39,7 +39,7 @@ class MysqlUtilisException extends MysqlConnectionException
  * @author      Claudio Cardinale <cardi@thecsea.it>
  * @copyright   2015 claudio cardinale
  * @version     3.0-dev
- * @package it\thecsea\mysqlTCS\connections\utilis
+ * @package it\thecsea\mysqltcs\connections\utilis
  */
 class MysqlUtilis
 {
