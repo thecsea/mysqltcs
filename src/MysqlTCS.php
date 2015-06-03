@@ -65,7 +65,7 @@ class MysqlTCS {
      */
     private $ca;
     /**
-     * @var \mysqli
+     * @var MysqlConnection
      */
     private $mysqlRef;
 
@@ -117,13 +117,20 @@ class MysqlTCS {
     {
         if($this->newConnection)
         {
-            $tmp = new MysqlConnection($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
-            $this->mysqlRef = $tmp->getMysqli();
+            $this->mysqlRef = new MysqlConnection($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }
         else
         {
             $this->mysqlRef = $this->mysqlConnections->getConnection($this, $this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }
+    }
+
+    /**
+     * Get if mysqlTCS is connected (using mysqli::ping)
+     * @return bool if true mysqlTCS is connected
+     */
+    public function isConnected(){
+        return $this->mysqlRef->getMysqli()->ping();
     }
 
 }

@@ -10,10 +10,11 @@ namespace it\thecsea\mysqlTCS;
  require_once(__DIR__."/../vendor/autoload.php");
 
 
-class Test extends \PHPUnit_Framework_TestCase {
+class TestConnnections extends \PHPUnit_Framework_TestCase {
 
     public function testOneConnection(){
         $db = include(__DIR__."/config.php");
-        $conection = new MysqlTCS($db['host'],  $db['user'], $db['psw'], $db['db']);
+        $connection = new MysqlTCS($db['host'],  $db['user'], $db['psw'], $db['db']);
+        $this->assertTrue( $connection->isConnected());
     }
 }

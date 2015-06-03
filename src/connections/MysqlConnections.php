@@ -86,7 +86,7 @@ class MysqlConnections {
      * @param string $key
      * @param string $cert
      * @param string $ca
-     * @return \mysqli
+     * @return MysqlConnection
      * @throws MysqlConnectionException
      */
     public function getConnection(MysqlTCS $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
@@ -101,7 +101,7 @@ class MysqlConnections {
         //return connection
         $clientKey = count($this->clients);
         $this->clients[$clientKey] = $client;
-        return $this->connections[$clientKey]->getMysqli();
+        return $this->connections[$clientKey];
     }
 
     /**
