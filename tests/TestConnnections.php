@@ -7,25 +7,35 @@
  */
 
 namespace it\thecsea\mysqltcs;
- require_once(__DIR__."/../vendor/autoload.php");
+require_once(__DIR__."/../vendor/autoload.php");
 
 
+/**
+ * Class TestConnnections
+ * @author Claudio Cardinale <cardi@thecsea.it>
+ * @copyright 2015 ClaudioCardinale
+ * @version 3.0.0-dev
+ * @package it\thecsea\mysqltcs
+ */
 class TestConnnections extends \PHPUnit_Framework_TestCase {
 
-    public function testOneConnection(){
+    public function testOneConnection()
+    {
         $db = include(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
         $this->assertTrue( $connection->isConnected());
     }
 
-    public function testTwoNewConnection(){
+    public function testTwoNewConnection()
+    {
         $db = include(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection2 = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
         $this->assertNotEquals($connection->getConnectionThreadId(), $connection2->getConnectionThreadId());
     }
 
-    public function testTwoNoNewConnection(){
+    public function testTwoNoNewConnection()
+    {
         $db = include(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db'],false);
         $connection2 = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db'], false);

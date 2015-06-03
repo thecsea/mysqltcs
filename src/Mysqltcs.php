@@ -25,10 +25,10 @@ use it\thecsea\mysqltcs\connections\MysqlConnections;
 
 /**
  * Class mysqltcs
- * @author      Claudio Cardinale <cardi@thecsea.it>
- * @copyright   2015 claudio cardinale
- * @version     3.0-dev
- * @package     it\thecsea\mysqltcs
+ * @author Claudio Cardinale <cardi@thecsea.it>
+ * @copyright 2015 ClaudioCardinale
+ * @version 3.0.0-dev
+ * @package it\thecsea\mysqltcs
  */
 class Mysqltcs {
 
@@ -70,9 +70,19 @@ class Mysqltcs {
     private $mysqlRef;
 
     /**
+     * @var \mysqli
+     */
+    private $mysqliRef;
+
+    /**
      * @var MysqlConnections
      */
     private $mysqlConnections;
+
+    /**
+     * @var mysqltcsLogger
+     */
+    private $logger = null;
 
     /**
      * Get a connection to mysql
@@ -110,6 +120,25 @@ class Mysqltcs {
     }
 
     /**
+     * Set the logger, set null if you don't want to log
+     * @param mysqltcsLogger $logger
+     */
+    public function setLogger(mysqltcsLogger $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param String $mex
+     */
+    private function log($mex)
+    {
+        if(!$this->logger)
+            return ;
+        $this->logger->log($mex);
+    }
+
+    /**
      * Get the connection according to newConnection value
      * @throws MysqlConnectionException
      */
@@ -123,13 +152,15 @@ class Mysqltcs {
         {
             $this->mysqlRef = $this->mysqlConnections->getConnection($this, $this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }
+        $this->mysqliRef = $this->mysqlRef->getMysqli();
     }
 
     /**
      * Get if mysqltcs is connected (using mysqli::ping)
      * @return bool if true mysqltcs is connected
      */
-    public function isConnected(){
+    public function isConnected()
+    {
         return $this->mysqlRef->getMysqli()->ping();
     }
 
@@ -137,8 +168,27 @@ class Mysqltcs {
      * Get the thread id (it can be used as mysqli identifier)
      * @return int
      */
-    public function getConnectionThreadId(){
-        return $this->mysqlRef->getMysqli()->thread_id;
+    public function getConnectionThreadId()
+    {
+        return $this->mysqliRef->thread_id;
     }
 
+    /**
+     * Execute an sql query and log it
+     * @param String $query sql query
+     * @return bool|\mysqli_result mysql query return
+     * @throws MysqltcsException thrown if an sql error is occurred, the message contain the mysql error and query
+     */
+    public function executeQuery($query)
+    {
+        $results = $this->mysqliRef->query($query);
+        if(!$results) {
+            $mex = "Mysql error " . $this->mysqliRef->error . " on '" . $query."''";
+            $this->log($mex);
+            throw new MysqltcsException($mex);
+        }else {
+            $this->log($query);
+            return $results;
+        }
+    }
 }
