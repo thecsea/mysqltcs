@@ -39,45 +39,14 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
     {
         $db = include(__DIR__ . "/config.php");
         $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
-        $logger = new logger();
+        $logger = new SimpleLogger();
         $connection->setLogger($logger);
         $connection->executeQuery("show tables");
         try {
             $connection->executeQuery("no sql");
         }catch(MysqltcsException $e){}
-        $this->assertEquals($logger->getLogArray()[0], "show tables");
-        $this->assertEquals(substr($logger->getLogArray()[1],0,strlen("Mysql error")), "Mysql error");
-    }
-}
-
-/**
- * Class logger
- * @author Claudio Cardinale <cardi@thecsea.it>
- * @copyright 2015 ClaudioCardinale
- * @version 3.0.0-dev
- * @package it\thecsea\mysqltcs
- */
-class logger implements MysqltcsLogger
-{
-    /**
-     * @var String[]
-     */
-    private $logArray = Array();
-
-    /**
-     * Log a message
-     * @param String $mex
-     */
-    public function log($mex)
-    {
-        $this->logArray[] = $mex;
-    }
-
-    /**
-     * @return String
-     */
-    public function getLogArray()
-    {
-        return $this->logArray;
+        $logA = $logger->getLogArray();//this way to keep the php 5.3 compatibility
+        $this->assertEquals($logA[0], "show tables");
+        $this->assertEquals(substr($logA[1],0,strlen("Mysql error")), "Mysql error");
     }
 }
