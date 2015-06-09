@@ -7,12 +7,21 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7.0
   - hhvm
+
+
+# optionally specify a list of environments, for example to test different RDBMS
+env:
+  - DB=mysql
 
 # Commands to be run before your environment runs.
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
+  - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS mysqltcs;" -uroot; fi
+  - if [[ "$DB" == "mysql" ]]; then mysql -e "CREATE USER 'mysqltcs'@'localhost' IDENTIFIED BY 'zhhnqBF26wtnUnP9';" -uroot; fi
+  - if [[ "$DB" == "mysql" ]]; then mysql -e "GRANT ALL ON mysqltcs.* TO 'mysqltcs'@'localhost';" -uroot; fi
 
 # Commands you want to run that will verify your build.
 script: phpunit
@@ -21,9 +30,9 @@ script: phpunit
 # fast_finish: If your build fails do not continue trying to build, just stop.
 matrix:
   allow_failures:
-    - php: 5.6
+    - php: 7.0
     - php: hhvm
-  fast_finish: true
+
 
 # Customize when the notification emails are sent.
 notifications:
