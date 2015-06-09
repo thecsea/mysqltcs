@@ -18,11 +18,19 @@ require_once(__DIR__ . "/../vendor/autoload.php");
  */
 class ExecuteTest extends \PHPUnit_Framework_TestCase
 {
-    public function testSimpleExecute()
+    /**
+     * @var Mysqltcs
+     */
+    private $connection;
+
+    public function setUp()
     {
         $db = include(__DIR__ . "/config.php");
-        $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
-        $connection->executeQuery("show tables");
+        $this->connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
+    }
+    public function testSimpleExecute()
+    {
+        $this->connection->executeQuery("show tables");
     }
 
     /**
@@ -30,20 +38,16 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
      */
     public function testMysqlError()
     {
-        $db = include(__DIR__ . "/config.php");
-        $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
-        $connection->executeQuery("no sql");
+        $this->connection->executeQuery("no sql");
     }
 
     public function testLogger()
     {
-        $db = include(__DIR__ . "/config.php");
-        $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $logger = new SimpleLogger();
-        $connection->setLogger($logger);
-        $connection->executeQuery("show tables");
+        $this->connection->setLogger($logger);
+        $this->connection->executeQuery("show tables");
         try {
-            $connection->executeQuery("no sql");
+            $this->connection->executeQuery("no sql");
         }catch(MysqltcsException $e){}
         $logA = $logger->getLogArray();//this way to keep the php 5.3 compatibility
         $this->assertEquals($logA[0], "show tables");
