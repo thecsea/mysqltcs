@@ -1,4 +1,6 @@
 # mysqltcs
+Build status: [![Build Status](https://travis-ci.org/thecsea/mysqltcs.svg?branch=master)](https://travis-ci.org/thecsea/mysqltcs)
+
 A simple class for mysql written in php
 
 In this class you can use the same db connection in more than one instances
