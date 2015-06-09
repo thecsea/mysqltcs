@@ -134,13 +134,16 @@ class MysqlConnections {
      * @return MysqlConnection
      */
     private function findConnection($host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
+        //get a new connection object to call equals
+        $newConnection = new MysqlConnection($host, $user, $password, $name, $key, $cert, $ca);
         //search a connection
         foreach($this->connections as /** @var MysqlConnection */ $connection){
-            if($connection->equalsProperties($host, $user, $password, $name, $key, $cert, $ca))
+            if($connection->equals($newConnection))
                 return $connection;
         }
 
         //I haven't find a connection, so I create a new one
-        return new MysqlConnection($host, $user, $password, $name, $key, $cert, $ca);
+        $newConnection->connect();
+        return $newConnection;
     }
 }

@@ -83,7 +83,6 @@ class MysqlConnection {
         $this->key = $key;
         $this->cert = $cert;
         $this->ca = $ca;
-        $this->getConnection();
     }
 
     /**
@@ -91,13 +90,14 @@ class MysqlConnection {
      */
     public function __destruct()
     {
-        $this->mysqlRef->close();
+        if($this->mysqlRef)
+            $this->mysqlRef->close();
     }
 
     /**
      * @throws utilis\MysqlUtilisException
      */
-    private function getConnection(){
+    public function connect(){
         if($this->key != "" && $this->cert != "" && $this->ca != ""){
             $this->mysqlRef =  MysqlUtilis::sslConnect($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }else{
@@ -114,7 +114,7 @@ class MysqlConnection {
     }
 
     /**
-     * Check if passed properties are equals to instance properties
+     * Check if the passed properties are equal to instance properties
      * @param string $host
      * @param string $user
      * @param string $password
@@ -127,6 +127,15 @@ class MysqlConnection {
     public function equalsProperties($host, $user, $password, $name, $key = "", $cert = "", $ca = "")
     {
         return ($this->host == $host && $this->user == $user && $this->password == $password && $this->name == $name && $this->key == $key && $this->cert == $cert && $this->ca == $ca);
+    }
+
+    /**
+     * Check if the passed object is equal to this, this check the properties not the mysqli connection
+     * @param MysqlConnection $connection
+     * @return bool true if object is equal
+     */
+    public function equals(MysqlConnection $connection){
+        return ($this->host == $connection->host && $this->user == $connection->user && $this->password == $connection->password && $this->name == $connection->name && $this->key == $connection->key && $this->cert == $connection->cert && $this->ca == $connection->ca);
     }
 
     /**

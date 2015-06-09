@@ -147,6 +147,7 @@ class Mysqltcs {
         if($this->newConnection)
         {
             $this->mysqlRef = new MysqlConnection($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
+            $this->mysqlRef->connect();
         }
         else
         {
