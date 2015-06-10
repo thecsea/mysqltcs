@@ -1,21 +1,21 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Claudio Cardinale
- * Date: 22/05/15
- * Time: 21.48
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+     * Created by PhpStorm.
+     * User: Claudio Cardinale
+     * Date: 22/05/15
+     * Time: 21.48
+     * This program is free software; you can redistribute it and/or
+     * modify it under the terms of the GNU General Public License
+     * as published by the Free Software Foundation; either version 2
+     * of the License, or (at your option) any later version.
+     * This program is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU General Public License for more details.
+     * You should have received a copy of the GNU General Public License
+     * along with this program; if not, write to the Free Software
+     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+     */
 
 namespace it\thecsea\mysqltcs;
 use it\thecsea\mysqltcs\connections\MysqlConnection;
@@ -114,7 +114,7 @@ class Mysqltcs {
      */
     public function __destruct()
     {
-        if(!$this->newConnection)
+        if (!$this->newConnection)
             $this->mysqlConnections->removeClient($this);
 
     }
@@ -133,8 +133,8 @@ class Mysqltcs {
      */
     private function log($mex)
     {
-        if(!$this->logger)
-            return ;
+        if (!$this->logger)
+            return;
         $this->logger->log($mex);
     }
 
@@ -144,12 +144,11 @@ class Mysqltcs {
      */
     private function getConnection()
     {
-        if($this->newConnection)
+        if ($this->newConnection)
         {
             $this->mysqlRef = new MysqlConnection($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
             $this->mysqlRef->connect();
-        }
-        else
+        } else
         {
             $this->mysqlRef = $this->mysqlConnections->getConnection($this, $this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }
@@ -183,11 +182,11 @@ class Mysqltcs {
     public function executeQuery($query)
     {
         $results = $this->mysqliRef->query($query);
-        if(!$results) {
-            $mex = "Mysql error " . $this->mysqliRef->error . " on '" . $query."''";
+        if (!$results) {
+            $mex = "Mysql error ".$this->mysqliRef->error." on '".$query."''";
             $this->log($mex);
             throw new MysqltcsException($mex);
-        }else {
+        } else {
             $this->log($query);
             return $results;
         }
