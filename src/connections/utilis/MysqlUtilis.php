@@ -73,7 +73,7 @@ class MysqlUtilis
             MYSQLI_CLIENT_SSL);
 
         if (!$connected || $mysqliRef->connect_error)
-            throw new MysqlUtilisException('Database connection error (' . $mysqliRef->connect_errno . ') '. $mysqliRef->connect_error);
+            throw new MysqlUtilisException('Database connection error ('.$mysqliRef->connect_errno.') '.$mysqliRef->connect_error);
 
         return $mysqliRef;
     }
@@ -98,7 +98,7 @@ class MysqlUtilis
             $name);
 
         if (!$connected || $mysqliRef->connect_error)
-            throw new MysqlUtilisException('Database connection error (' . $mysqliRef->connect_errno . ') '. $mysqliRef->connect_error);
+            throw new MysqlUtilisException('Database connection error ('.$mysqliRef->connect_errno.') '.$mysqliRef->connect_error);
 
         return $mysqliRef;
     }

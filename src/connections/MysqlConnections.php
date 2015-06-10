@@ -67,7 +67,7 @@ class MysqlConnections {
      */
     public static function getInstance()
     {
-        if(self::$instance == null)
+        if (self::$instance == null)
         {
             $c = __CLASS__;
             self::$instance = new $c;
@@ -89,10 +89,10 @@ class MysqlConnections {
      * @return MysqlConnection
      * @throws MysqlConnectionException
      */
-    public function getConnection(mysqltcs $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
+    public function getConnection(mysqltcs $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = "") {
         //the client has already a connection
-        $clientKey = array_search ($client,$this->clients);
-        if($clientKey !== false)
+        $clientKey = array_search($client, $this->clients);
+        if ($clientKey !== false)
             throw new MysqlConnectionException("The client has already a connection, it must remove it before");
 
         //get new key
@@ -110,10 +110,10 @@ class MysqlConnections {
      * @param mysqltcs $client
      * @throws MysqlConnectionException
      */
-    public function removeClient(mysqltcs $client){
+    public function removeClient(mysqltcs $client) {
         //the client doesn't exist
-        $clientKey = array_search ($client,$this->clients);
-        if($clientKey === false)
+        $clientKey = array_search($client, $this->clients);
+        if ($clientKey === false)
             throw new MysqlConnectionException("The client doesn't exist");
 
         //remove client
@@ -133,12 +133,12 @@ class MysqlConnections {
      * @param string $ca
      * @return MysqlConnection
      */
-    private function findConnection($host, $user, $password, $name, $key = "", $cert = "", $ca = ""){
+    private function findConnection($host, $user, $password, $name, $key = "", $cert = "", $ca = "") {
         //get a new connection object to call equals
         $newConnection = new MysqlConnection($host, $user, $password, $name, $key, $cert, $ca);
         //search a connection
-        foreach($this->connections as /** @var MysqlConnection */ $connection){
-            if($connection->equals($newConnection))
+        foreach ($this->connections as /** @var MysqlConnection */ $connection) {
+            if ($connection->equals($newConnection))
                 return $connection;
         }
 

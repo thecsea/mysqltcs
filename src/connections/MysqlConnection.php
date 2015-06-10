@@ -1,21 +1,21 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: claudio
- * Date: 22/05/15
- * Time: 22.14
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+     * Created by PhpStorm.
+     * User: claudio
+     * Date: 22/05/15
+     * Time: 22.14
+     * This program is free software; you can redistribute it and/or
+     * modify it under the terms of the GNU General Public License
+     * as published by the Free Software Foundation; either version 2
+     * of the License, or (at your option) any later version.
+     * This program is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU General Public License for more details.
+     * You should have received a copy of the GNU General Public License
+     * along with this program; if not, write to the Free Software
+     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+     */
 
 namespace it\thecsea\mysqltcs\connections;
 
@@ -90,18 +90,18 @@ class MysqlConnection {
      */
     public function __destruct()
     {
-        if($this->mysqlRef)
+        if ($this->mysqlRef)
             $this->mysqlRef->close();
     }
 
     /**
      * @throws utilis\MysqlUtilisException
      */
-    public function connect(){
-        if($this->key != "" && $this->cert != "" && $this->ca != ""){
-            $this->mysqlRef =  MysqlUtilis::sslConnect($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
-        }else{
-            $this->mysqlRef =  MysqlUtilis::Connect($this->host, $this->user, $this->password, $this->name);
+    public function connect() {
+        if ($this->key != "" && $this->cert != "" && $this->ca != "") {
+            $this->mysqlRef = MysqlUtilis::sslConnect($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
+        }else {
+            $this->mysqlRef = MysqlUtilis::Connect($this->host, $this->user, $this->password, $this->name);
         }
     }
 
@@ -134,7 +134,7 @@ class MysqlConnection {
      * @param MysqlConnection $connection
      * @return bool true if object is equal
      */
-    public function equals(MysqlConnection $connection){
+    public function equals(MysqlConnection $connection) {
         return ($this->host == $connection->host && $this->user == $connection->user && $this->password == $connection->password && $this->name == $connection->name && $this->key == $connection->key && $this->cert == $connection->cert && $this->ca == $connection->ca);
     }
 
@@ -143,6 +143,6 @@ class MysqlConnection {
      */
     public function __toString()
     {
-        return ("host: ".$this->host ."\nuser: ".$this->user ."\npassword: ".$this->password  ."\nname: ".$this->name ."\nkey: ".$this->key ."\ncert: ".$this->cert ."\nca: ".$this->ca);
+        return ("host: ".$this->host."\nuser: ".$this->user."\npassword: ".$this->password."\nname: ".$this->name."\nkey: ".$this->key."\ncert: ".$this->cert."\nca: ".$this->ca);
     }
 }
