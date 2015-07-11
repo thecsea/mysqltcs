@@ -27,6 +27,8 @@ Execute composer (download composer here https://getcomposer.org/)
 
 
 # Tests
-Change db data in `test/config`
+Change db data in `test/config.php`
+
+import `test/mysqltcs.sql`
 
 # By [thecsea.it](http://www.thecsea.it)
