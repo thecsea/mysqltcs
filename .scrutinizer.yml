@@ -6,7 +6,7 @@ build:
             - mysql -uroot -e "create database IF NOT EXISTS mysqltcs;"
             - mysql -uroot -e "CREATE USER 'mysqltcs'@'localhost' IDENTIFIED BY 'zhhnqBF26wtnUnP9';"
             - mysql -uroot -e "GRANT ALL ON mysqltcs.* TO 'mysqltcs'@'localhost';"
-            - mysql -uroot -e mysqltcs < tests/mysqltcs.sql
+            - mysql -uroot mysqltcs < tests/mysqltcs.sql
     tests:
         override:
             -
