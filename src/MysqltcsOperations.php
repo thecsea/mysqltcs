@@ -1,21 +1,21 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: claudio
- * Date: 11/07/15
- * Time: 17.53
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+     * Created by PhpStorm.
+     * User: claudio
+     * Date: 11/07/15
+     * Time: 17.53
+     * This program is free software; you can redistribute it and/or
+     * modify it under the terms of the GNU General Public License
+     * as published by the Free Software Foundation; either version 2
+     * of the License, or (at your option) any later version.
+     * This program is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU General Public License for more details.
+     * You should have received a copy of the GNU General Public License
+     * along with this program; if not, write to the Free Software
+     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+     */
 
 namespace it\thecsea\mysqltcs;
 
@@ -60,8 +60,9 @@ class MysqltcsOperations
         $this->mysqltcs = $mysqltcs;
         $this->from = $defaultFrom;
         $this->quotes = $defaultQuotes;
-        if (!$mysqltcs->isConnected())
-            throw new MysqltcsException("mysqltcs passed is not connected");
+        if (!$mysqltcs->isConnected()) {
+                    throw new MysqltcsException("mysqltcs passed is not connected");
+        }
     }
 
     /**
@@ -69,7 +70,7 @@ class MysqltcsOperations
      */
     function __toString()
     {
-        return ("from: " . $this->from . "\nquotes: " . ($this->quotes ? "true" : "false") . "\nmysqltcs:\n" . (string)$this->mysqltcs);
+        return ("from: ".$this->from."\nquotes: ".($this->quotes ? "true" : "false")."\nmysqltcs:\n".(string) $this->mysqltcs);
     }
 
     /**
@@ -113,7 +114,7 @@ class MysqltcsOperations
 
 
     /**
-     * @return bool|true
+     * @return boolean
      */
     public function isQuotes()
     {
@@ -172,8 +173,9 @@ class MysqltcsOperations
 
         //insert results in an array
         $i = 0;
-        while ($row = $results->fetch_array())
-            $ret[$i++] = $row[$pos];
+        while ($row = $results->fetch_array()) {
+                    $ret[$i++] = $row[$pos];
+        }
 
 
         //free memory
@@ -191,15 +193,17 @@ class MysqltcsOperations
      */
     public function tableInfo($returnName, $from = "")
     {
-        if ($from == "")
-            $from = $this->from;
+        if ($from == "") {
+                    $from = $this->from;
+        }
 
         //if an error is occurred mysqltcs throw an exception
         $results = $this->mysqltcs->executeQuery("show table status like '$from';");
 
         $ret = null;
-        if (($row = $results->fetch_array()) !== false)
-            $ret = isset($row[$returnName]) ? $row[$returnName] : null;
+        if (($row = $results->fetch_array()) !== false) {
+                    $ret = isset($row[$returnName]) ? $row[$returnName] : null;
+        }
 
         //free memory
         $results->free();

@@ -155,7 +155,7 @@ class Mysqltcs
      */
     function __toString()
     {
-        return ("instance number: " . $this->instanceNumber . "\nhost: " . $this->host . "\nuser: " . $this->user . "\npassword: " . $this->password . "\nname: " . $this->name . "\nkey: " . $this->key . "\ncert: " . $this->cert . "\nca: " . $this->ca . "\nnew conenction: " . ($this->newConnection ? "true" : "false") . "\nconnection thread id: " . $this->getConnectionThreadId());
+        return ("instance number: ".$this->instanceNumber."\nhost: ".$this->host."\nuser: ".$this->user."\npassword: ".$this->password."\nname: ".$this->name."\nkey: ".$this->key."\ncert: ".$this->cert."\nca: ".$this->ca."\nnew conenction: ".($this->newConnection ? "true" : "false")."\nconnection thread id: ".$this->getConnectionThreadId());
     }
 
 
@@ -188,7 +188,7 @@ class Mysqltcs
         if ($this->newConnection) {
             $this->mysqlRef = new MysqlConnection($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
             $this->mysqlRef->connect();
-        } else {
+        }else {
             $this->mysqlRef = $this->mysqlConnections->getConnection($this, $this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }
         $this->mysqliRef = $this->mysqlRef->getMysqli();
@@ -239,10 +239,10 @@ class Mysqltcs
     {
         $results = $this->mysqliRef->query($query);
         if (!$results) {
-            $mex = "Mysql error " . $this->mysqliRef->error . " on '" . $query . "''";
+            $mex = "Mysql error ".$this->mysqliRef->error." on '".$query."''";
             $this->log($mex);
             throw new MysqltcsException($mex);
-        } else {
+        }else {
             $this->log($query);
             return $results;
         }

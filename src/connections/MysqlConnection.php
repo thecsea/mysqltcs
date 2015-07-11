@@ -101,8 +101,9 @@ class MysqlConnection {
     {
         //increment instance number to distinguish the classes, so each $this points to a different instance
         $this->instanceNumber = ++self::$instances;
-        if ($this->mysqlRef != null)
-            $this->connect();
+        if ($this->mysqlRef != null) {
+                    $this->connect();
+        }
     }
 
     /**
@@ -129,7 +130,7 @@ class MysqlConnection {
     public function connect() {
         if ($this->key != "" && $this->cert != "" && $this->ca != "") {
             $this->mysqlRef = MysqlUtilis::sslConnect($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
-        } else {
+        }else {
             $this->mysqlRef = MysqlUtilis::Connect($this->host, $this->user, $this->password, $this->name);
         }
     }
