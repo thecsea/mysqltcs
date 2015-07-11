@@ -1,11 +1,6 @@
 build:
-    environment:
-        php: '5.5.0'
-
-build:
     tests:
         override:
-                command: 'phpunit'
                 coverage:
                     file: 'coverage.xml'
                     format: 'php-clover'
