@@ -179,7 +179,6 @@ class MysqltcsOperations
         //free memory
         $results->free();
 
-        //return
         return $ret;
     }
 
@@ -207,5 +206,4 @@ class MysqltcsOperations
 
         return $ret;
     }
-
 }
