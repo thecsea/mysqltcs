@@ -106,3 +106,7 @@ crashlytics-build.properties
 ### Composer ###
 composer.phar
 /vendor
+
+
+### tests ###
+coverage.xml
