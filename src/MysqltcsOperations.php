@@ -20,7 +20,6 @@
 namespace it\thecsea\mysqltcs;
 
 
-
 /**
  * Class MysqltcsOperations
  * This class allow you to perform efficiently common tasks like a simple insert
@@ -47,24 +46,38 @@ class MysqltcsOperations
 
 
     /**
+     * Instance the class based on the mysqltcs connections and $defaultFrom and $defaultQuotes value that
+     *  are used as default values in all method, but you can set local value for every method
      * @param Mysqltcs $mysqltcs mysqltcs connected to a valid databases
-     * @param string $from value of from mysql from label. It can assume all data types, for example it can be simply a table or a more complex type like a subquery, if you want use complex data set quotes to false
-     * @param bool|true $quotes if true ` are inserted at the start and at the end of $from. it suggested to keep this true if you use only one table in from label
+     * @param string $defaultFrom value of from mysql from label. It can assume all data types, for example it can be simply
+     * a table or a more complex type like a subquery, if you want use complex data set quotes to false
+     * @param bool|true $defaultQuotes if true ` are inserted at the start and at the end of $from. it suggested to keep this
+     * true if you use only one table in from label
      * @throws MysqltcsException
      */
-    function __construct(Mysqltcs $mysqltcs, $from = "", $quotes = true)
+    function __construct(Mysqltcs $mysqltcs, $defaultFrom = "", $defaultQuotes = true)
     {
         $this->mysqltcs = $mysqltcs;
-        $this->from = $from;
-        $this->quotes = $quotes;
-        if(!$mysqltcs->isConnected())
+        $this->from = $defaultFrom;
+        $this->quotes = $defaultQuotes;
+        if (!$mysqltcs->isConnected())
             throw new MysqltcsException("mysqltcs passed is not connected");
+    }
+
+    /**
+     * @return string
+     */
+    function __toString()
+    {
+        return ("from: " . $this->from . "\nquotes: " . ($this->quotes ? "true" : "false") . "\nmysqltcs:\n" . (string)$this->mysqltcs);
     }
 
     /**
      * This entails that you can clone every instance of this class
      */
-    public function __clone(){}
+    public function __clone()
+    {
+    }
 
     /**
      * @return Mysqltcs
@@ -98,8 +111,9 @@ class MysqltcsOperations
         $this->from = $from;
     }
 
+
     /**
-     * @return boolean
+     * @return bool|true
      */
     public function isQuotes()
     {
@@ -157,17 +171,41 @@ class MysqltcsOperations
         $ret = array();
 
         //insert results in an array
-        if($results!==false){
-            $i=0;
-            while ($row = $results->fetch_array())
-                $ret[$i++]=$row[$pos];
-        }
+        $i = 0;
+        while ($row = $results->fetch_array())
+            $ret[$i++] = $row[$pos];
+
 
         //free memory
-        if($ret!==false)
-            $results->free();
+        $results->free();
 
         //return
         return $ret;
     }
+
+    /**
+     * Return $returnName value info of table indicated in $from
+     * @param $returnName
+     * @param string $from you have to set to a table
+     * @return String|null
+     * @throws MysqltcsException
+     */
+    public function tableInfo($returnName, $from = "")
+    {
+        if ($from == "")
+            $from = $this->from;
+
+        //if an error is occurred mysqltcs throw an exception
+        $results = $this->mysqltcs->executeQuery("show table status like '$from';");
+
+        $ret = null;
+        if (($row = $results->fetch_array()) !== false)
+            $ret = isset($row[$returnName]) ? $row[$returnName] : null;
+
+        //free memory
+        $results->free();
+
+        return $ret;
+    }
+
 }

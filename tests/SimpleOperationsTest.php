@@ -53,4 +53,21 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
         $connection->showDatabases();
         $connection2->showDatabases();
     }
+
+    public function testToString()
+    {
+        $db = include(__DIR__ . "/config.php");
+        $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
+        $operations = new MysqltcsOperations($connection, $db['tables']['test1'], true);
+        $expected = ("from: ".$db['tables']['test1']."\nquotes: true\nmysqltcs:\n"."instance number: ".$connection->getInstanceNumber()."\nhost: ".$db['host'] ."\nuser: ".$db['user'] ."\npassword: ".$db['psw']  ."\nname: ".$db['db'] ."\nkey: "."" ."\ncert: "."" ."\nca: "."\nnew conenction: "."true"."\nconnection thread id: ".$connection->getConnectionThreadId());
+        $this->assertEquals((String)$operations , $expected);
+    }
+
+    public function testTableInfo()
+    {
+        $db = include(__DIR__ . "/config.php");
+        $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
+        $connection = new MysqltcsOperations($mysqltcs,$db['tables']['test1']);
+        $this->assertEquals($connection->tableInfo("Name"), $db['tables']['test1']);
+    }
 }
