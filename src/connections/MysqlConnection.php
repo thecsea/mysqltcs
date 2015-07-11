@@ -114,14 +114,6 @@ class MysqlConnection {
     }
 
     /**
-     * @param int $instanceNumber
-     */
-    public function setInstanceNumber($instanceNumber)
-    {
-        $this->instanceNumber = $instanceNumber;
-    }
-
-    /**
      *
      */
     public function __destruct()
