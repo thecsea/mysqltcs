@@ -8,6 +8,7 @@ build:
             - mysql -uroot -e "GRANT ALL ON mysqltcs.* TO 'mysqltcs'@'localhost';"
     tests:
         override:
+            -
                 command: 'phpunit'
                 coverage:
                     file: 'coverage.xml'
