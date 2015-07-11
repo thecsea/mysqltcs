@@ -25,6 +25,7 @@ use it\thecsea\mysqltcs\mysqltcs;
 
 /**
  * Class MysqlConnections
+ * this class manage the connections pool
  * @author Claudio Cardinale <cardi@thecsea.it>
  * @copyright 2015 claudio cardinale
  * @version 3.0.0-dev
