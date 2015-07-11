@@ -20,20 +20,6 @@
 namespace it\thecsea\mysqltcs\connections\utilis;
 
 
-use it\thecsea\mysqltcs\connections\MysqlConnectionException;
-
-/**
- * Class MysqlUtilisException
- * @author Claudio Cardinale <cardi@thecsea.it>
- * @copyright 2015 claudio cardinale
- * @version 3.0.0-dev
- * @package     it\thecsea\mysqltcs\connections\utilis
- */
-class MysqlUtilisException extends MysqlConnectionException
-{
-}
-
-
 /**
  * Class MysqlUtilis
  * @author      Claudio Cardinale <cardi@thecsea.it>
@@ -55,7 +41,7 @@ class MysqlUtilis
      * @return \mysqli
      * @throws MysqlUtilisException
      */
-    static public function sslConnect($host, $user, $password, $name, $key, $cert, $ca)
+    public static function sslConnect($host, $user, $password, $name, $key, $cert, $ca)
     {
         if ($key == "" || $cert == "" || $ca == "") {
             throw new MysqlUtilisException("SSL parameters error");
@@ -89,7 +75,7 @@ class MysqlUtilis
      * @return \mysqli
      * @throws MysqlUtilisException
      */
-    static public function connect($host, $user, $password, $name)
+    public static function connect($host, $user, $password, $name)
     {
         $mysqliRef = mysqli_init();
 

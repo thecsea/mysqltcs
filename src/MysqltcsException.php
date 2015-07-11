@@ -27,4 +27,4 @@ namespace it\thecsea\mysqltcs;
  * @version 3.0.0-dev
  * @package     it\thecsea\mysqltcs
  */
-class MysqltcsException  extends \Exception {}
+class MysqltcsException extends \Exception {}

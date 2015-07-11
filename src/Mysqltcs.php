@@ -134,6 +134,7 @@ class Mysqltcs
                 $this->mysqlConnections->removeClient($this);
             } catch (MysqlConnectionException $e)
             {
+                //client already removed
             }
         }
     }
