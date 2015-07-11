@@ -33,6 +33,10 @@ use it\thecsea\mysqltcs\connections\MysqlConnections;
 class Mysqltcs {
 
     /**
+     * @var int
+     */
+    private $cloneCount;
+    /**
      * @var String
      */
     private $host;
@@ -94,9 +98,11 @@ class Mysqltcs {
      * @param string $key optional
      * @param string $cert optional
      * @param string $ca optional
+     * @throws MysqlConnectionException
      */
     public function __construct($host, $user, $password, $name, $newConnection = true, $key = "", $cert = "", $ca = "")
     {
+        $this->cloneCount = 0;
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
@@ -110,7 +116,7 @@ class Mysqltcs {
     }
 
     /**
-     * @throws MysqlConnectionException
+     *
      */
     public function __destruct()
     {
@@ -118,6 +124,17 @@ class Mysqltcs {
             try {
                 $this->mysqlConnections->removeClient($this);
             }catch(MysqlConnectionException $e){}
+    }
+
+    /**
+     * create a new mysql connection ref
+     * @throws MysqlConnectionException
+     */
+    public function __clone()
+    {
+        //increment clone count to distinguish the classes, so each $this points to a different instance
+        $this->cloneCount++;
+        $this->getConnection();
     }
 
     /**

@@ -41,4 +41,32 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
         $connection2 = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db'], false);
         $this->assertEquals($connection->getConnectionThreadId(), $connection2->getConnectionThreadId());
     }
+
+    public function testCloneConnection()
+    {
+        $db = include(__DIR__."/config.php");
+        $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
+        $connection2 = clone $connection;
+        $this->assertNotEquals($connection, $connection2);
+        $this->assertTrue( $connection->isConnected());
+        $this->assertTrue( $connection2->isConnected());
+    }
+
+    public function testCloneNewConnection()
+    {
+        $db = include(__DIR__."/config.php");
+        $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
+        $connection2 = clone $connection;
+        $this->assertNotEquals($connection, $connection2);
+        $this->assertNotEquals($connection->getConnectionThreadId(), $connection2->getConnectionThreadId());
+    }
+
+    public function testCloneNoNewConnection()
+    {
+        $db = include(__DIR__."/config.php");
+        $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db'],false);
+        $connection2 = clone $connection;
+        $this->assertNotEquals($connection, $connection2);
+        $this->assertEquals($connection->getConnectionThreadId(), $connection2->getConnectionThreadId());
+    }
 }
