@@ -114,7 +114,7 @@ class MysqltcsOperations
 
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isQuotes()
     {
@@ -122,7 +122,7 @@ class MysqltcsOperations
     }
 
     /**
-     * @param boolean $quotes
+     * @param bool $quotes
      */
     public function setQuotes($quotes)
     {
