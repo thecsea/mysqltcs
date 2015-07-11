@@ -1,15 +1,11 @@
 build:
     environment:
         php: '5.5.0'
-
-build:
     dependencies:
         before:
             - mysql -uroot -e "create database IF NOT EXISTS mysqltcs;"
             - mysql -uroot -e "CREATE USER 'mysqltcs'@'localhost' IDENTIFIED BY 'zhhnqBF26wtnUnP9';"
             - mysql -uroot -e "GRANT ALL ON mysqltcs.* TO 'mysqltcs'@'localhost';"
-
-build:
     tests:
         override:
                 command: 'phpunit'
