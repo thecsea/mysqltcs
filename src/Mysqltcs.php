@@ -109,7 +109,7 @@ class Mysqltcs
      * @param string $ca optional
      * @throws MysqlConnectionException
      */
-    public function __construct($host, $user, $password, $name, $newConnection = true, $key = "", $cert = "", $ca = "")
+    function __construct($host, $user, $password, $name, $newConnection = true, $key = "", $cert = "", $ca = "")
     {
         $this->instanceNumber = ++self::$instances;
         $this->host = $host;
@@ -214,6 +214,15 @@ class Mysqltcs
     public function getConnectionThreadId()
     {
         return $this->mysqliRef->thread_id;
+    }
+
+    /**
+     * get the id of the last element inserted
+     * @return mixed
+     */
+    public function getLastId()
+    {
+        return $this->mysqliRef->insert_id;
     }
 
     /**

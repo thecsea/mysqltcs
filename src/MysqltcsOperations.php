@@ -45,16 +45,41 @@ class MysqltcsOperations
      */
     private $quotes;
 
+
     /**
      * @param Mysqltcs $mysqltcs mysqltcs connected to a valid databases
      * @param string $from value of from mysql from label. It can assume all data types, for example it can be simply a table or a more complex type like a subquery, if you want use complex data set quotes to false
      * @param bool|true $quotes if true ` are inserted at the start and at the end of $from. it suggested to keep this true if you use only one table in from label
+     * @throws MysqltcsException
      */
     function __construct(Mysqltcs $mysqltcs, $from = "", $quotes = true)
     {
         $this->mysqltcs = $mysqltcs;
         $this->from = $from;
         $this->quotes = $quotes;
+        if(!$mysqltcs->isConnected())
+            throw new MysqltcsException("mysqltcs passed is not connected");
+    }
+
+    /**
+     * This entails that you can clone every instance of this class
+     */
+    public function __clone(){}
+
+    /**
+     * @return Mysqltcs
+     */
+    public function getMysqltcs()
+    {
+        return $this->mysqltcs;
+    }
+
+    /**
+     * @param Mysqltcs $mysqltcs
+     */
+    public function setMysqltcs($mysqltcs)
+    {
+        $this->mysqltcs = $mysqltcs;
     }
 
     /**
@@ -87,5 +112,62 @@ class MysqltcsOperations
     public function setQuotes($quotes)
     {
         $this->quotes = $quotes;
+    }
+
+    /**
+     * get the id of the last element inserted
+     * @return mixed
+     */
+    public function getLastId()
+    {
+        return $this->mysqltcs->getLastId();
+    }
+
+    /**
+     * return all tables names of the current db
+     * @return array
+     * @throws MysqltcsException
+     */
+    public function showTables()
+    {
+        return $this->simpleList("SHOW TABLES;");
+    }
+
+    /**
+     * return all databases names of the current server
+     * @return array
+     * @throws MysqltcsException
+     */
+    public function showDatabases()
+    {
+        return $this->simpleList("SHOW DATABASES;");
+    }
+
+    /**
+     * return an array of values of each row of element in the $pos column
+     * @param String $query
+     * @param int $pos column number
+     * @return array
+     * @throws MysqltcsException
+     */
+    private function simpleList($query, $pos = 0)
+    {
+        //if an error is occurred mysqltcs throw an exception
+        $results = $this->mysqltcs->executeQuery($query);
+        $ret = array();
+
+        //insert results in an array
+        if($results!==false){
+            $i=0;
+            while ($row = $results->fetch_array())
+                $ret[$i++]=$row[$pos];
+        }
+
+        //free memory
+        if($ret!==false)
+            $results->free();
+
+        //return
+        return $ret;
     }
 }

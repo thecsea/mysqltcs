@@ -12,4 +12,7 @@ return array(
     'user' => 'mysqltcs',
     'psw' => 'zhhnqBF26wtnUnP9',
     'db' => 'mysqltcs',
+    'tables' => array(
+        'test1' => 'test1',
+    ),
 );
