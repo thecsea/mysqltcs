@@ -10,13 +10,13 @@ namespace it\thecsea\mysqltcs;
 
 
 /**
- * Interface mysqltcsLogger
+ * Interface MysqltcsLogger
  * @author Claudio Cardinale <cardi@thecsea.it>
  * @copyright 2015 ClaudioCardinale
  * @version 3.0.0-dev
  * @package it\thecsea\mysqltcs
  */
-interface mysqltcsLogger {
+interface MysqltcsLogger {
     /**
      * Log a message
      * @param String $mex
