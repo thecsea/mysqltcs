@@ -1,21 +1,21 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: claudio
- * Date: 22/05/15
- * Time: 22.10
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+     * Created by PhpStorm.
+     * User: claudio
+     * Date: 22/05/15
+     * Time: 22.10
+     * This program is free software; you can redistribute it and/or
+     * modify it under the terms of the GNU General Public License
+     * as published by the Free Software Foundation; either version 2
+     * of the License, or (at your option) any later version.
+     * This program is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU General Public License for more details.
+     * You should have received a copy of the GNU General Public License
+     * along with this program; if not, write to the Free Software
+     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+     */
 
 namespace it\thecsea\mysqltcs\connections;
 
@@ -93,8 +93,9 @@ class MysqlConnections {
     public function getConnection(mysqltcs $client, $host, $user, $password, $name, $key = "", $cert = "", $ca = "") {
         //the client has already a connection
         $clientKey = array_search($client, $this->clients);
-        if ($clientKey !== false)
-            throw new MysqlConnectionException("The client has already a connection, it must be removed before");
+        if ($clientKey !== false) {
+                    throw new MysqlConnectionException("The client has already a connection, it must be removed before");
+        }
 
         //get new key
         $clientKey = count($this->clients);
@@ -114,8 +115,9 @@ class MysqlConnections {
     public function removeClient(mysqltcs $client) {
         //the client doesn't exist
         $clientKey = array_search($client, $this->clients);
-        if ($clientKey === false)
-            throw new MysqlConnectionException("The client doesn't exist");
+        if ($clientKey === false) {
+                    throw new MysqlConnectionException("The client doesn't exist");
+        }
 
         //remove client
         unset($this->connections[$clientKey]);
@@ -139,8 +141,9 @@ class MysqlConnections {
         $newConnection = new MysqlConnection($host, $user, $password, $name, $key, $cert, $ca);
         //search a connection
         foreach ($this->connections as /** @var MysqlConnection */ $connection) {
-            if ($connection->equals($newConnection))
-                return $connection;
+            if ($connection->equals($newConnection)) {
+                            return $connection;
+            }
         }
 
         //I haven't find a connection, so I create a new one
