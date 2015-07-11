@@ -35,7 +35,11 @@ class Mysqltcs {
     /**
      * @var int
      */
-    private $cloneCount;
+    private $instanceNumber;
+    /**
+     * @var int
+     */
+    static private $instances = 0;
     /**
      * @var String
      */
@@ -102,7 +106,7 @@ class Mysqltcs {
      */
     public function __construct($host, $user, $password, $name, $newConnection = true, $key = "", $cert = "", $ca = "")
     {
-        $this->cloneCount = 0;
+        $this->instanceNumber = ++self::$instances;
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
@@ -132,10 +136,19 @@ class Mysqltcs {
      */
     public function __clone()
     {
-        //increment clone count to distinguish the classes, so each $this points to a different instance
-        $this->cloneCount++;
+        //increment instance number to distinguish the classes, so each $this points to a different instance
+        $this->instanceNumber = ++self::$instances;
         $this->getConnection();
     }
+
+    /**
+     * @return string
+     */
+    function __toString()
+    {
+        return ("instance number: ".$this->instanceNumber."\nhost: ".$this->host."\nuser: ".$this->user."\npassword: ".$this->password."\nname: ".$this->name."\nkey: ".$this->key."\ncert: ".$this->cert."\nca: ".$this->ca."\nnew conenction: ".($this->newConnection?"true":"false")."\nconnection thread id: ".$this->getConnectionThreadId());
+    }
+
 
     /**
      * Set the logger, set null if you don't want to log
@@ -171,6 +184,14 @@ class Mysqltcs {
             $this->mysqlRef = $this->mysqlConnections->getConnection($this, $this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }
         $this->mysqliRef = $this->mysqlRef->getMysqli();
+    }
+
+    /**
+     * @return int
+     */
+    public function getInstanceNumber()
+    {
+        return $this->instanceNumber;
     }
 
     /**

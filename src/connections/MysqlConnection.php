@@ -31,10 +31,17 @@ use it\thecsea\mysqltcs\connections\utilis\MysqlUtilis;
  */
 class MysqlConnection {
     /**
+     * @var int
+     */
+    private $instanceNumber;
+    /**
+     * @var int
+     */
+    static private $instances = 0;
+    /**
      * @var \mysqli
      */
-    private $mysqlRef;
-
+    private $mysqlRef = null;
     /**
      * @var string
      */
@@ -76,6 +83,7 @@ class MysqlConnection {
      */
     public function __construct($host, $user, $password, $name, $key = "", $cert = "", $ca = "")
     {
+        $this->instanceNumber = ++self::$instances;
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
@@ -83,6 +91,33 @@ class MysqlConnection {
         $this->key = $key;
         $this->cert = $cert;
         $this->ca = $ca;
+    }
+
+    /**
+     * @throws utilis\MysqlUtilisException
+     */
+    public function __clone()
+    {
+        //increment instance number to distinguish the classes, so each $this points to a different instance
+        $this->instanceNumber = ++self::$instances;
+        if($this->mysqlRef != null)
+            $this->connect();
+    }
+
+    /**
+     * @return int
+     */
+    public function getInstanceNumber()
+    {
+        return $this->instanceNumber;
+    }
+
+    /**
+     * @param int $instanceNumber
+     */
+    public function setInstanceNumber($instanceNumber)
+    {
+        $this->instanceNumber = $instanceNumber;
     }
 
     /**
@@ -143,6 +178,6 @@ class MysqlConnection {
      */
     public function __toString()
     {
-        return ("host: ".$this->host."\nuser: ".$this->user."\npassword: ".$this->password."\nname: ".$this->name."\nkey: ".$this->key."\ncert: ".$this->cert."\nca: ".$this->ca);
+        return ("instance number: ".$this->instanceNumber."\nhost: ".$this->host."\nuser: ".$this->user."\npassword: ".$this->password."\nname: ".$this->name."\nkey: ".$this->key."\ncert: ".$this->cert."\nca: ".$this->ca);
     }
 }
