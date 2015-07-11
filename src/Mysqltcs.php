@@ -115,8 +115,9 @@ class Mysqltcs {
     public function __destruct()
     {
         if (!$this->newConnection)
-            $this->mysqlConnections->removeClient($this);
-
+            try {
+                $this->mysqlConnections->removeClient($this);
+            }catch(MysqlConnectionException $e){}
     }
 
     /**
