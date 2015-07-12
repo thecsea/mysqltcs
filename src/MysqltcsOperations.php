@@ -1,24 +1,23 @@
 <?php
 /**
-     * Created by PhpStorm.
-     * User: claudio
-     * Date: 11/07/15
-     * Time: 17.53
-     * This program is free software; you can redistribute it and/or
-     * modify it under the terms of the GNU General Public License
-     * as published by the Free Software Foundation; either version 2
-     * of the License, or (at your option) any later version.
-     * This program is distributed in the hope that it will be useful,
-     * but WITHOUT ANY WARRANTY; without even the implied warranty of
-     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     * GNU General Public License for more details.
-     * You should have received a copy of the GNU General Public License
-     * along with this program; if not, write to the Free Software
-     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-     */
+ * Created by PhpStorm.
+ * User: claudio
+ * Date: 11/07/15
+ * Time: 17.53
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 
 namespace it\thecsea\mysqltcs;
-
 
 /**
  * Class MysqltcsOperations
@@ -61,7 +60,7 @@ class MysqltcsOperations
         $this->from = $defaultFrom;
         $this->quotes = $defaultQuotes;
         if (!$mysqltcs->isConnected()) {
-                    throw new MysqltcsException("mysqltcs passed is not connected");
+            throw new MysqltcsException("mysqltcs passed is not connected");
         }
     }
 
@@ -70,7 +69,7 @@ class MysqltcsOperations
      */
     function __toString()
     {
-        return ("from: ".$this->from."\nquotes: ".($this->quotes ? "true" : "false")."\nmysqltcs:\n".(string) $this->mysqltcs);
+        return ("from: " . $this->from . "\nquotes: " . ($this->quotes ? "true" : "false") . "\nmysqltcs:\n" . (string)$this->mysqltcs);
     }
 
     /**
@@ -151,7 +150,7 @@ class MysqltcsOperations
     /**
      * return all databases names of the current server
      * @return array
-     * @throws MysqltcsException
+     * @throws MysqltcsException returned on mysql error
      */
     public function showDatabases()
     {
@@ -163,7 +162,7 @@ class MysqltcsOperations
      * @param String $query
      * @param int $pos column number
      * @return array
-     * @throws MysqltcsException
+     * @throws MysqltcsException returned on mysql error
      */
     private function simpleList($query, $pos = 0)
     {
@@ -174,7 +173,7 @@ class MysqltcsOperations
         //insert results in an array
         $i = 0;
         while ($row = $results->fetch_array()) {
-                    $ret[$i++] = $row[$pos];
+            $ret[$i++] = $row[$pos];
         }
 
 
@@ -184,17 +183,18 @@ class MysqltcsOperations
         return $ret;
     }
 
+
     /**
      * Return $returnName value info of table indicated in $from
      * @param $returnName
-     * @param string $from you have to set to a table
-     * @return String|null
-     * @throws MysqltcsException
+     * @param string $from you have to set to a table. If you leave this empty default value is used
+     * @return string|null
+     * @throws MysqltcsException returned on mysql error
      */
     public function tableInfo($returnName, $from = "")
     {
         if ($from == "") {
-                    $from = $this->from;
+            $from = $this->from;
         }
 
         //if an error is occurred mysqltcs throw an exception
@@ -202,12 +202,95 @@ class MysqltcsOperations
 
         $ret = null;
         if (($row = $results->fetch_array()) !== false) {
-                    $ret = isset($row[$returnName]) ? $row[$returnName] : null;
+            $ret = isset($row[$returnName]) ? $row[$returnName] : null;
         }
 
         //free memory
         $results->free();
 
         return $ret;
+    }
+
+    /**
+     * Return the formatted string for a multiple insert
+     * @param array|string $array it can be a string array of multiple insert or a string of a single insert,
+     * In any case the String must be the SQL single insert string
+     * @param bool|false $newline if true each insert is separated by \n
+     * @return string formatted string
+     */
+    private function insertValues($array, $newline = false)
+    {
+        return ("(" . implode(")," . ($newline ? "\n" : "") . "(", (array)$array) . ")");
+    }
+
+    /**
+     * Insert a row or multiple rows
+     * @param string $fields SQL list of flieds, you can even use subquery or "as" (SQL).
+     * The simplest example is: \`field1\`, \`field2\`, ...
+     * @param array|string $values you can use this parameter in two different way:
+     * <ul>
+     * <li>you can pass a string array of rows
+     * <li>you can pass a string of a single row
+     * </ul>
+     * in any case the string(each element of array) must be composed by an SQL string well formatted, for example:
+     * \'data1\', \'data2\' <br>
+     * N.B. if you want pass an array you have to pass an array like this:
+     * array("\'data11\', \'data12\'", \'data21\', \'data22\')
+     * @param string $from you can use this field to specify the from value, if you leave this empty,
+     * default value is used
+     * @throws MysqltcsException returned on mysql error, for example invalid data or permission denied
+     */
+    public function insert($fields, $values, $from = "")
+    {
+        if ($from == "") {
+            $from = $this->from;
+        }
+
+        //if an error is occurred mysqltcs throw an exception
+        $this->mysqltcs->executeQuery("INSERT INTO `$from` ($fields) VALUES " . $this->insertValues($values) . ";");
+    }
+
+    /**
+     * Get the first value of $field based on $where.<br>
+     * This method does not make any type of order, so you are not able to know which value is taken
+     * if there are more values under $where condition, so we suggest to use this method only with conditions
+     * that generates only one value. If you have more values under condition we suggest to use list method
+     * @param string $field filed name
+     * @param string $where the where condition to get the value
+     * @param string $from you can use this field to specify the from value, if you leave this empty,
+     * default value is used
+     * @param bool|null $quotes you can use this field to specify if insert \` at limits of $from or not.
+     * If you leave this empty,default value is used
+     * @return string|null the value
+     * @throws MysqltcsException returned on mysql error, for example invalid data or permission denied
+     */
+    public function getValue($field, $where, $from = "", $quotes = null)
+    {
+        if ($from == "") {
+            $from = $this->from;
+        }
+        if ($quotes == null) {
+            $quotes = $this->quotes;
+        }
+        if ($quotes) {
+            $from = "`".$from."`";
+        }
+
+
+        //if an error is occurred mysqltcs throw an exception
+        $results = $this->mysqltcs->executeQuery("SELECT $field FROM $from WHERE $where;");
+
+        if (($row = $results->fetch_array()) !== false) {
+            //free memory
+            $results->free();
+            //check for chain, for example: db.table.field
+            $field = explode(".", $field);
+            $field = $field[count($field) - 1];
+            //return value
+            return $row[$field];
+        }
+
+        //return null for no data;
+        return null;
     }
 }
