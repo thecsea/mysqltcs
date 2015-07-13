@@ -21,6 +21,11 @@ class SimpleLogger implements MysqltcsLogger
      * @var String[]
      */
     private $logArray = Array();
+    /**
+     * if true the logger print the mex when log() si called
+     * @var bool
+     */
+    private $print = false;
 
     /**
      * Log a message
@@ -28,7 +33,27 @@ class SimpleLogger implements MysqltcsLogger
      */
     public function log($mex)
     {
+        if($this->print)
+            print $mex;
         $this->logArray[] = $mex;
+    }
+
+    /**
+     * return print status
+     * @return boolean
+     */
+    public function isPrint()
+    {
+        return $this->print;
+    }
+
+    /**
+     * set print, if true the logger print the mex when log() si called
+     * @param boolean $print
+     */
+    public function setPrint($print)
+    {
+        $this->print = $print;
     }
 
     /**

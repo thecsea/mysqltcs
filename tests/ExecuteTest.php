@@ -41,7 +41,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $this->connection->executeQuery("no sql");
     }
 
-    public function testLogger()
+    public function testSimpleLogger()
     {
         $logger = new SimpleLogger();
         $this->connection->setLogger($logger);
@@ -52,5 +52,31 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $logA = $logger->getLogArray();//this way to keep the php 5.3 compatibility
         $this->assertEquals($logA[0], "show tables");
         $this->assertEquals(substr($logA[1],0,strlen("Mysql error")), "Mysql error");
+    }
+
+    public function testSetSimpleLogger()
+    {
+        $this->connection->setSimpleLogger();
+        $logger = /** @var SimpleLogger */ $this->connection->getLogger();
+        $this->connection->executeQuery("show tables");
+        try {
+            $this->connection->executeQuery("no sql");
+        }catch(MysqltcsException $e){}
+        $logA = $logger->getLogArray();//this way to keep the php 5.3 compatibility
+        $this->assertEquals($logA[0], "show tables");
+        $this->assertEquals(substr($logA[1],0,strlen("Mysql error")), "Mysql error");
+    }
+
+    public function testLoggerPrint()
+    {
+        $logger = new SimpleLogger();
+        $this->connection->setLogger($logger);
+        $this->assertFalse($logger->isPrint());
+        $logger->setPrint(true);
+        $this->assertTrue($logger->isPrint());
+        $this->expectOutputString("show tables");
+        $this->connection->executeQuery("show tables");
+        $logger->setPrint(false);
+        $this->assertFalse($logger->isPrint());
     }
 }

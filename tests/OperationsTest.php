@@ -35,5 +35,7 @@ class OperationsTest  extends \PHPUnit_Framework_TestCase{
     {
         $this->connection->insert("value", "'test'");
         $this->assertEquals("test", $this->connection->getValue("value","id = ".$this->connection->getLastId()));
+        //no data
+        $this->assertNull($this->connection->getValue("value","id = ".($this->connection->getLastId()+10)));
     }
 }

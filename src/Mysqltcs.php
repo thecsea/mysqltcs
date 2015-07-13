@@ -93,7 +93,7 @@ class Mysqltcs
     private $mysqlConnections;
 
     /**
-     * @var mysqltcsLogger
+     * @var mysqltcsLogger|SimpleLogger
      */
     private $logger = null;
 
@@ -161,11 +161,28 @@ class Mysqltcs
 
     /**
      * Set the logger, set null if you don't want to log
-     * @param mysqltcsLogger $logger
+     * @param mysqltcsLogger $logger|SimpleLogger
      */
     public function setLogger(mysqltcsLogger $logger)
     {
         $this->logger = $logger;
+    }
+
+    /**
+     * Return the logger, it is not a clone so you can alter it
+     * @return mysqltcsLogger|SimpleLogger
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     *set the simple logger as logger
+     */
+    public function setSimpleLogger()
+    {
+        $this->logger = new SimpleLogger();
     }
 
     /**
