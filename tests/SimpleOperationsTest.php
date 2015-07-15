@@ -70,4 +70,23 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
         $connection = new MysqltcsOperations($mysqltcs,$db['tables']['test1']);
         $this->assertEquals($connection->getTableInfo("Name"), $db['tables']['test1']);
     }
+
+    public function testQuotes()
+    {
+        //we should not have errors in the following linex to verify the test
+        $db = include(__DIR__ . "/config.php");
+        $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
+        $connection = new MysqltcsOperations($mysqltcs,$db['tables']['test1'], true);
+        $this->quotesTestSupport($connection);
+        $connection = new MysqltcsOperations($mysqltcs,$db['tables']['test1'], false);
+        $this->quotesTestSupport($connection);
+    }
+
+    private function quotesTestSupport(MysqltcsOperations $connection)
+    {
+        $db = include(__DIR__ . "/config.php");
+        $connection->getList("*", "1");
+        $connection->getList("*", "1", "id", $db['tables']['test1'], true);
+        $connection->getList("*", "1", "id", "`".$db['tables']['test1']."`", false);
+    }
 }

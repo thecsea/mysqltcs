@@ -371,10 +371,10 @@ class MysqltcsOperations
     }
 
     /**
-     * make the check on $from, returning the correct from (default or passed)
-     * @param $from
-     * @param null $quotes
-     * @return String new from
+     * Check $from, it returns the correct from (default or passed with/without quotes)
+     * @param string $from
+     * @param bool|null $quotes
+     * @return string new from
      */
     private function fromCheck($from, $quotes = null)
     {
