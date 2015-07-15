@@ -1,9 +1,11 @@
 # mysqltcs
 Build status: [![Build Status](https://travis-ci.org/thecsea/mysqltcs.svg?branch=master)](https://travis-ci.org/thecsea/mysqltcs) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecsea/mysqltcs/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thecsea/mysqltcs/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/thecsea/mysqltcs/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/thecsea/mysqltcs/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/thecsea/mysqltcs/badges/build.png?b=master)](https://scrutinizer-ci.com/g/thecsea/mysqltcs/build-status/master)
 
-A simple class for mysql written in php
+A simple library for mysql written in php
 
 In this class you can use the same db connection in more than one instances
+
+This library allow you to make common database operations immediately 
 
 # Download and install
 

@@ -256,6 +256,16 @@ class Mysqltcs
     }
 
     /**
+     * return the escaped string
+     * @param $string
+     * @return string
+     */
+    public function getEscapedString($string)
+    {
+        return $this->mysqliRef->real_escape_string($string);
+    }
+
+    /**
      * Execute an sql query and log it
      * @param String $query sql query
      * @return bool|\mysqli_result mysql query return

@@ -34,10 +34,10 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
         $db = include(__DIR__ . "/config.php");
         $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection = new MysqltcsOperations($mysqltcs, "t1");
-        $connection->setFrom("frm1");
-        $this->assertEquals ($connection->getFrom(), "frm1");
-        $connection->setQuotes(false);
-        $this->assertFalse ($connection->isQuotes());
+        $connection->setDefaultFrom("frm1");
+        $this->assertEquals ($connection->getDefaultFrom(), "frm1");
+        $connection->setDefaultQuotes(false);
+        $this->assertFalse ($connection->isDefaultQuotes());
         $mysqltcs2 = clone $mysqltcs;
         $connection->setMysqltcs($mysqltcs2);
         $this->assertNotEquals ($connection->getMysqltcs(), $mysqltcs);

@@ -47,6 +47,12 @@ class OperationsTest  extends \PHPUnit_Framework_TestCase{
         $this->free();
         $this->removeNumber();
         $this->free();
+        $this->update();
+        $this->free();
+        $this->escape();
+        $this->free();
+        $this->simpleChain();
+        $this->free();
     }
 
     public function free()
@@ -73,7 +79,9 @@ class OperationsTest  extends \PHPUnit_Framework_TestCase{
         $expected[] = array("value"=>"test2", "id"=>self::$connection->getLastId());
         $results = self::$connection->getList("id, value", "1");
         foreach($expected as $row)
-            $this->assertTrue(in_array($row,$results));
+        {
+            $this->assertTrue(in_array($row, $results));
+        }
         $this->assertEquals(count($expected), count($results));
     }
 
@@ -109,5 +117,46 @@ class OperationsTest  extends \PHPUnit_Framework_TestCase{
         $this->assertEquals(0, $this->free());
         self::$connection->insert("value", array("'test1'","'test2'"));
         $this->assertEquals(2, $this->free());
+    }
+
+    private function update()
+    {
+        self::$connection->insert("value, value2", "'test1', 'test3'");
+        $id = self::$connection->getLastId();
+        self::$connection->update(array("value" => "'test2'"),"id = ".$id);
+        $this->assertEquals("test2", self::$connection->getValue("value", "id = ".$id));
+        $this->assertEquals("test3", self::$connection->getValue("value2", "id = ".$id));
+    }
+
+    private function escape()
+    {
+        $text = "tes't1";
+        self::$connection->insert("value", "'" . self::$connection->getEscapedString($text) . "'");
+        $thrown = false;
+        try {
+            self::$connection->insert("value", "'" . $text . "'");
+        } catch (MysqltcsException $e) {
+            $thrown = true;
+        }
+        $this->assertTrue($thrown);
+    }
+
+    private function simpleChain()
+    {
+        $db = include(__DIR__ . "/config.php");
+        $expected = array();
+        self::$connection->insert($db['tables']['test1'].".value", "'test1'");
+        $expected[] = array("id"=>self::$connection->getLastId(), "value"=>"test1");
+        self::$connection->insert($db['tables']['test1'].".value", "'test2'");
+        $id = self::$connection->getLastId();
+        self::$connection->update(array($db['tables']['test1'].".value" => "'test3'"),$db['tables']['test1'].".id = ".$id);
+        $expected[] = array("id"=>$id, "value"=>"test3");
+        $this->assertEquals($expected, self::$connection->getList($db['tables']['test1'].".id, ".$db['tables']['test1'].".value", "1", "id ASC"));
+        $this->assertNotEquals($expected, self::$connection->getList($db['tables']['test1'].".id, ".$db['tables']['test1'].".value", "1", "id DESC"));
+        foreach($expected as $row)
+        {
+            self::$connection->deleteRows($db['tables']['test1'].".id = ".$row['id']);
+        }
+        $this->assertEquals(array(),self::$connection->getList("*", "1"));
     }
 }
