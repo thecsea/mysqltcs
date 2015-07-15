@@ -74,7 +74,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($logger->isPrint());
         $logger->setPrint(true);
         $this->assertTrue($logger->isPrint());
-        $this->expectOutputString("show tables");
+        $this->expectOutputString("show tables\n");
         $this->connection->executeQuery("show tables");
         $logger->setPrint(false);
         $this->assertFalse($logger->isPrint());

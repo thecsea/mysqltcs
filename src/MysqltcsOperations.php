@@ -140,7 +140,7 @@ class MysqltcsOperations
     /**
      * return all tables names of the current db
      * @return array
-     * @throws MysqltcsException
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
     public function showTables()
     {
@@ -150,7 +150,7 @@ class MysqltcsOperations
     /**
      * return all databases names of the current server
      * @return array
-     * @throws MysqltcsException returned on mysql error
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
     public function showDatabases()
     {
@@ -162,7 +162,7 @@ class MysqltcsOperations
      * @param String $query
      * @param int $pos column number
      * @return array
-     * @throws MysqltcsException returned on mysql error
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
     private function simpleList($query, $pos = 0)
     {
@@ -172,7 +172,8 @@ class MysqltcsOperations
 
         //insert results in an array
         $i = 0;
-        while ($row = $results->fetch_array()) {
+        while ($row = $results->fetch_array())
+        {
             $ret[$i++] = $row[$pos];
         }
 
@@ -189,11 +190,12 @@ class MysqltcsOperations
      * @param $returnName
      * @param string $from you have to set to a table. If you leave this empty default value is used
      * @return string|null
-     * @throws MysqltcsException returned on mysql error
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
     public function tableInfo($returnName, $from = "")
     {
-        if ($from == "") {
+        if ($from == "")
+        {
             $from = $this->from;
         }
 
@@ -238,11 +240,12 @@ class MysqltcsOperations
      * array("\'data11\', \'data12\'", \'data21\', \'data22\')
      * @param string $from you can use this field to specify the from value, if you leave this empty,
      * default value is used
-     * @throws MysqltcsException returned on mysql error, for example invalid data or permission denied
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
     public function insert($fields, $values, $from = "")
     {
-        if ($from == "") {
+        if ($from == "")
+        {
             $from = $this->from;
         }
 
@@ -254,15 +257,15 @@ class MysqltcsOperations
      * Get the first value of $field based on $where.<br>
      * This method does not make any type of order, so you are not able to know which value is taken
      * if there are more values under $where condition, so we suggest to use this method only with conditions
-     * that generates only one value. If you have more values under condition we suggest to use list method
+     * that generates only one value. If you have more values under condition we suggest to use getList method
      * @param string $field filed name
-     * @param string $where the where condition to get the value
+     * @param string $where the where condition to get the value,obviously you can use different tables (via chain form)
      * @param string $from you can use this field to specify the from value, if you leave this empty,
      * default value is used
      * @param bool|null $quotes you can use this field to specify if insert \` at limits of $from or not.
      * If you leave this empty,default value is used
      * @return string|null the value
-     * @throws MysqltcsException returned on mysql error, for example invalid data or permission denied
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
     public function getValue($field, $where, $from = "", $quotes = null)
     {
@@ -280,7 +283,8 @@ class MysqltcsOperations
         //if an error is occurred mysqltcs throw an exception
         $results = $this->mysqltcs->executeQuery("SELECT $field FROM $from WHERE $where;");
 
-        if (($row = $results->fetch_array()) !== false) {
+        if (($row = $results->fetch_array()) !== false)
+        {
             //free memory
             $results->free();
             //check for chain, for example: db.table.field
@@ -292,5 +296,107 @@ class MysqltcsOperations
 
         //return null for no data;
         return null;
+    }
+
+    /**
+     * This method make a select and return the results as a associative matrix, you can make a simple select in one or
+     * in more tables, you can make a select with order or not. This is a less powerful method than getListAdvanced
+     * @param string $select the select SQL field. Obviously you can use different tables (via chain form),
+     * you can also use SQL construct like 'as'
+     * @param string $where the where condition to get the value,obviously you can use different tables (via chain form)
+     * @param string $order you can insert the order SQL rules, if you leave this empty the query is executed without
+     * any order. Order example: 'id ASC'
+     * @param string $from you can use this field to specify the from value, if you leave this empty,
+     * default value is used
+     * @param bool|null $quotes you can use this field to specify if insert \` at limits of $from or not.
+     * If you leave this empty,default value is used
+     * @return array the associative matrix of results
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
+     */
+    public function getList($select, $where, $order = "", $from = "", $quotes = null)
+    {
+        if($order)
+            return $this->getListAdvanced($select, $where, " ORDER BY ".$order, $from, $quotes);
+        else
+            return $this->getListAdvanced($select, $where, $order, $from, $quotes);
+    }
+
+    /**
+     *
+     * This method make a select and return the results as a associative matrix. This is method is more powerful than
+     * getList, in fact it allows to specify all advanced SQL constructs, not only order, but even for example group by
+     * and having
+     * @param string $select the select SQL field. Obviously you can use different tables (via chain form),
+     * you can also use SQL construct like 'as'
+     * @param string $where the where condition to get the value,obviously you can use different tables (via chain form)
+     * @param string $other you can insert what you want (obviously it must be SQL)
+     * @param string $from you can use this field to specify the from value, if you leave this empty,
+     * default value is used
+     * @param bool|null $quotes you can use this field to specify if insert \` at limits of $from or not.
+     * If you leave this empty,default value is used
+     * @return array the associative matrix of results
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
+     */
+    public function getListAdvanced($select, $where, $other = "", $from = "", $quotes = null)
+    {
+        if ($from == "") {
+            $from = $this->from;
+        }
+        if ($quotes == null) {
+            $quotes = $this->quotes;
+        }
+        if ($quotes) {
+            $from = "`".$from."`";
+        }
+
+        //if an error is occurred mysqltcs throw an exception
+        $results = $this->mysqltcs->executeQuery("SELECT $select FROM $from WHERE $where$other;");
+        $ret = array();
+        $i = 0;
+        while ($row = $results->fetch_array())
+        {
+            $j = 0;
+            foreach ($row as $key => $value)
+            {
+                //get only element with associative key
+                if ($j++ % 2)
+                {
+                    $ret[$i][$key] = $value;
+                }
+            }
+            $i++;
+        }
+
+        //free memory
+        $results->free();
+
+        return $ret;
+    }
+
+    /**
+     * @param string $where the where condition to get the value,obviously you can use different tables (via chain form)
+     * @param string $from you can use this field to specify the from value, if you leave this empty,
+     * default value is used
+     * @param bool|null $quotes you can use this field to specify if insert \` at limits of $from or not.
+     * If you leave this empty,default value is used
+     * @return int
+     * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
+     */
+    public function deleteRows($where, $from = "", $quotes = null)
+    {
+        if ($from == "") {
+            $from = $this->from;
+        }
+        if ($quotes == null) {
+            $quotes = $this->quotes;
+        }
+        if ($quotes) {
+            $from = "`".$from."`";
+        }
+
+        //if an error is occurred mysqltcs throw an exception
+        $this->mysqltcs->executeQuery("DELETE FROM $from WHERE $where;");
+
+        return $this->mysqltcs->getAffectedRows();
     }
 }

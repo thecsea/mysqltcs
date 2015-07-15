@@ -161,7 +161,7 @@ class Mysqltcs
 
     /**
      * Set the logger, set null if you don't want to log
-     * @param mysqltcsLogger $logger|SimpleLogger
+     * @param mysqltcsLogger|SimpleLogger $logger
      */
     public function setLogger(mysqltcsLogger $logger)
     {
@@ -244,6 +244,15 @@ class Mysqltcs
     public function getLastId()
     {
         return $this->mysqliRef->insert_id;
+    }
+
+    /**
+     * get affected rows number
+     * @return int
+     */
+    public function getAffectedRows()
+    {
+        return $this->mysqliRef->affected_rows;
     }
 
     /**

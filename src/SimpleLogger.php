@@ -34,7 +34,7 @@ class SimpleLogger implements MysqltcsLogger
     public function log($mex)
     {
         if($this->print)
-            print $mex;
+            print $mex."\n";
         $this->logArray[] = $mex;
     }
 
