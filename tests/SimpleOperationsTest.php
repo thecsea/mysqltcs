@@ -68,6 +68,6 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
         $db = include(__DIR__ . "/config.php");
         $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection = new MysqltcsOperations($mysqltcs,$db['tables']['test1']);
-        $this->assertEquals($connection->tableInfo("Name"), $db['tables']['test1']);
+        $this->assertEquals($connection->getTableInfo("Name"), $db['tables']['test1']);
     }
 }

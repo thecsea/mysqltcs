@@ -54,7 +54,7 @@ class MysqltcsOperations
      * true if you use only one table in from label
      * @throws MysqltcsException
      */
-    function __construct(Mysqltcs $mysqltcs, $defaultFrom = "", $defaultQuotes = true)
+    public function __construct(Mysqltcs $mysqltcs, $defaultFrom = "", $defaultQuotes = true)
     {
         $this->mysqltcs = $mysqltcs;
         $this->from = $defaultFrom;
@@ -67,7 +67,7 @@ class MysqltcsOperations
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return ("from: " . $this->from . "\nquotes: " . ($this->quotes ? "true" : "false") . "\nmysqltcs:\n" . (string)$this->mysqltcs);
     }
@@ -144,7 +144,7 @@ class MysqltcsOperations
      */
     public function showTables()
     {
-        return $this->simpleList("SHOW TABLES;");
+        return $this->getSimpleList("SHOW TABLES;");
     }
 
     /**
@@ -154,7 +154,7 @@ class MysqltcsOperations
      */
     public function showDatabases()
     {
-        return $this->simpleList("SHOW DATABASES;");
+        return $this->getSimpleList("SHOW DATABASES;");
     }
 
     /**
@@ -164,7 +164,7 @@ class MysqltcsOperations
      * @return array
      * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
-    private function simpleList($query, $pos = 0)
+    private function getSimpleList($query, $pos = 0)
     {
         //if an error is occurred mysqltcs throw an exception
         $results = $this->mysqltcs->executeQuery($query);
@@ -192,12 +192,9 @@ class MysqltcsOperations
      * @return string|null
      * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
-    public function tableInfo($returnName, $from = "")
+    public function getTableInfo($returnName, $from = "")
     {
-        if ($from == "")
-        {
-            $from = $this->from;
-        }
+        $from = $this->fromCheck($from, false);
 
         //if an error is occurred mysqltcs throw an exception
         $results = $this->mysqltcs->executeQuery("show table status like '$from';");
@@ -238,19 +235,16 @@ class MysqltcsOperations
      * \'data1\', \'data2\' <br>
      * N.B. if you want pass an array you have to pass an array like this:
      * array("\'data11\', \'data12\'", \'data21\', \'data22\')
-     * @param string $from you can use this field to specify the from value, if you leave this empty,
-     * default value is used
+     * @param string $from you can use this field to specify the INTO value, if you leave this empty,
+     * default value is used ($defaultFrom)
      * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
     public function insert($fields, $values, $from = "")
     {
-        if ($from == "")
-        {
-            $from = $this->from;
-        }
+        $from = $this->fromCheck($from, true);
 
         //if an error is occurred mysqltcs throw an exception
-        $this->mysqltcs->executeQuery("INSERT INTO `$from` ($fields) VALUES " . $this->insertValues($values) . ";");
+        $this->mysqltcs->executeQuery("INSERT INTO $from ($fields) VALUES " . $this->insertValues($values) . ";");
     }
 
     /**
@@ -269,16 +263,7 @@ class MysqltcsOperations
      */
     public function getValue($field, $where, $from = "", $quotes = null)
     {
-        if ($from == "") {
-            $from = $this->from;
-        }
-        if ($quotes == null) {
-            $quotes = $this->quotes;
-        }
-        if ($quotes) {
-            $from = "`".$from."`";
-        }
-
+        $from = $this->fromCheck($from, $quotes);
 
         //if an error is occurred mysqltcs throw an exception
         $results = $this->mysqltcs->executeQuery("SELECT $field FROM $from WHERE $where;");
@@ -294,7 +279,7 @@ class MysqltcsOperations
             return $row[$field];
         }
 
-        //return null for no data;
+        //no data
         return null;
     }
 
@@ -339,15 +324,7 @@ class MysqltcsOperations
      */
     public function getListAdvanced($select, $where, $other = "", $from = "", $quotes = null)
     {
-        if ($from == "") {
-            $from = $this->from;
-        }
-        if ($quotes == null) {
-            $quotes = $this->quotes;
-        }
-        if ($quotes) {
-            $from = "`".$from."`";
-        }
+        $from = $this->fromCheck($from, $quotes);
 
         //if an error is occurred mysqltcs throw an exception
         $results = $this->mysqltcs->executeQuery("SELECT $select FROM $from WHERE $where$other;");
@@ -385,19 +362,32 @@ class MysqltcsOperations
      */
     public function deleteRows($where, $from = "", $quotes = null)
     {
+        $from = $this->fromCheck($from, $quotes);
+
+        //if an error is occurred mysqltcs throw an exception
+        $this->mysqltcs->executeQuery("DELETE FROM $from WHERE $where;");
+
+        return $this->mysqltcs->getAffectedRows();
+    }
+
+    /**
+     * make the check on $from, returning the correct from (default or passed)
+     * @param $from
+     * @param null $quotes
+     * @return String new from
+     */
+    private function fromCheck($from, $quotes = null)
+    {
         if ($from == "") {
             $from = $this->from;
         }
-        if ($quotes == null) {
+        if ($quotes === null) {
             $quotes = $this->quotes;
         }
         if ($quotes) {
             $from = "`".$from."`";
         }
 
-        //if an error is occurred mysqltcs throw an exception
-        $this->mysqltcs->executeQuery("DELETE FROM $from WHERE $where;");
-
-        return $this->mysqltcs->getAffectedRows();
+        return $from;
     }
 }

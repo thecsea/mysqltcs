@@ -109,7 +109,7 @@ class Mysqltcs
      * @param string $ca optional
      * @throws MysqlConnectionException
      */
-    function __construct($host, $user, $password, $name, $newConnection = true, $key = "", $cert = "", $ca = "")
+    public function __construct($host, $user, $password, $name, $newConnection = true, $key = "", $cert = "", $ca = "")
     {
         $this->instanceNumber = ++self::$instances;
         $this->host = $host;
@@ -153,7 +153,7 @@ class Mysqltcs
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return ("instance number: ".$this->instanceNumber."\nhost: ".$this->host."\nuser: ".$this->user."\npassword: ".$this->password."\nname: ".$this->name."\nkey: ".$this->key."\ncert: ".$this->cert."\nca: ".$this->ca."\nnew conenction: ".($this->newConnection ? "true" : "false")."\nconnection thread id: ".$this->getConnectionThreadId());
     }
