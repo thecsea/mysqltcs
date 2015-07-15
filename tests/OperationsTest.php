@@ -45,11 +45,13 @@ class OperationsTest  extends \PHPUnit_Framework_TestCase{
         $this->free();
         $this->multipleInsert();
         $this->free();
+        $this->removeNumber();
+        $this->free();
     }
 
     public function free()
     {
-        self::$connection->deleteRows("1");
+        return self::$connection->deleteRows("1");
     }
 
 
@@ -100,5 +102,12 @@ class OperationsTest  extends \PHPUnit_Framework_TestCase{
         self::$connection->insert("value", array("'test1'","'test2'"));
         $expected = array(array("value"=>"test1"),array("value"=>"test2"));
         $this->assertEquals($expected, self::$connection->getList("value", "1", "id ASC"));
+    }
+
+    private function removeNumber()
+    {
+        $this->assertEquals(0, $this->free());
+        self::$connection->insert("value", array("'test1'","'test2'"));
+        $this->assertEquals(2, $this->free());
     }
 }

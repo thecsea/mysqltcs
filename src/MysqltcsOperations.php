@@ -374,12 +374,13 @@ class MysqltcsOperations
     }
 
     /**
+     * Delete one or more rows according to $where condition
      * @param string $where the where condition to get the value,obviously you can use different tables (via chain form)
      * @param string $from you can use this field to specify the from value, if you leave this empty,
      * default value is used
      * @param bool|null $quotes you can use this field to specify if insert \` at limits of $from or not.
      * If you leave this empty,default value is used
-     * @return int
+     * @return int the deleted rows number
      * @throws MysqltcsException thrown on mysql error, for example invalid data or permission denied
      */
     public function deleteRows($where, $from = "", $quotes = null)
