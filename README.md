@@ -29,6 +29,8 @@ Execute composer (download composer here https://getcomposer.org/)
 # Tests
 Change db data in `test/config.php`
 
-import `test/mysqltcs.sql`
+Import `test/mysqltcs.sql`
+
+**CAUTION**: each time tests are executed, the database must be in the initial state, like the import has just been executed (you should have a empty  table, only the db structure)
 
 # By [thecsea.it](http://www.thecsea.it)
