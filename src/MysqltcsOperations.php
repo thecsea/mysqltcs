@@ -70,7 +70,7 @@ class MysqltcsOperations
      */
     public function __toString()
     {
-        return ("from: " . $this->from . "\nquotes: " . ($this->quotes ? "true" : "false") . "\nmysqltcs:\n" . (string)$this->mysqltcs);
+        return ("from: " . $this->from . "\nquotes: " . self::booleanString($this->quotes) . "\nmysqltcs:\n" . (string)$this->mysqltcs);
     }
 
     /**
@@ -128,6 +128,19 @@ class MysqltcsOperations
     {
         $this->quotes = $quotes;
     }
+
+    /**
+     * Convert a boolean into a string
+     * @param bool $boolean
+     * @return string
+     */
+    private static function booleanString($boolean)
+    {
+        if($boolean)
+            return "true";
+        return "false";
+    }
+
 
     /**
      * get the id of the last element inserted
@@ -200,8 +213,8 @@ class MysqltcsOperations
         $results = $this->mysqltcs->executeQuery("show table status like '$from';");
 
         $ret = null;
-        if (($row = $results->fetch_array()) !== false) {
-            $ret = isset($row[$returnName]) ? $row[$returnName] : null;
+        if (($row = $results->fetch_array()) !== false && isset($row[$returnName])) {
+            $ret = $row[$returnName];
         }
 
         //free memory
@@ -217,7 +230,7 @@ class MysqltcsOperations
      * @param bool|false $newline if true each insert is separated by \n
      * @return string formatted string
      */
-    static private function insertValues($array, $newline = false)
+    private static function insertValues($array, $newline = false)
     {
         return ("(" . implode(")," . ($newline ? "\n" : "") . "(", (array)$array) . ")");
     }
@@ -423,7 +436,7 @@ class MysqltcsOperations
      * @param array $values associative array,the key must be the SQL field name
      * @return string set
      */
-    static private function updateSet(array $values)
+    private static function updateSet(array $values)
     {
         $ret = "";
         foreach($values as $key=>$value)
