@@ -21,7 +21,7 @@ require_once(__DIR__ . "/../vendor/autoload.php");
 class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
     public function testSimpleTests()
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection = new MysqltcsOperations($mysqltcs);
         $connection->showDatabases();
@@ -31,7 +31,7 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
 
     public function testGetterSetter()
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection = new MysqltcsOperations($mysqltcs, "t1");
         $connection->setDefaultFrom("frm1");
@@ -46,7 +46,7 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
 
     public function testClone()
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection = new MysqltcsOperations($mysqltcs);
         $connection2 = clone $connection;
@@ -56,7 +56,7 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
 
     public function testToString()
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $operations = new MysqltcsOperations($connection, $db['tables']['test1'], true);
         $expected = ("from: ".$db['tables']['test1']."\nquotes: true\nmysqltcs:\n"."instance number: ".$connection->getInstanceNumber()."\nhost: ".$db['host'] ."\nuser: ".$db['user'] ."\npassword: ".$db['psw']  ."\nname: ".$db['db'] ."\nkey: "."" ."\ncert: "."" ."\nca: "."\nnew conenction: "."true"."\nconnection thread id: ".$connection->getConnectionThreadId());
@@ -65,7 +65,7 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
 
     public function testTableInfo()
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection = new MysqltcsOperations($mysqltcs,$db['tables']['test1']);
         $this->assertEquals($connection->getTableInfo("Name"), $db['tables']['test1']);
@@ -73,8 +73,8 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
 
     public function testQuotes()
     {
-        //we should not have errors in the following linex to verify the test
-        $db = include(__DIR__ . "/config.php");
+        //we should not have errors in the following lines to verify the test
+        $db = require(__DIR__ . "/config.php");
         $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection = new MysqltcsOperations($mysqltcs,$db['tables']['test1'], true);
         $this->quotesTestSupport($connection);
@@ -84,7 +84,7 @@ class SimpleOperationsTest  extends \PHPUnit_Framework_TestCase{
 
     private function quotesTestSupport(MysqltcsOperations $connection)
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $connection->getList("*", "1");
         $connection->getList("*", "1", "id", $db['tables']['test1'], true);
         $connection->getList("*", "1", "id", "`".$db['tables']['test1']."`", false);

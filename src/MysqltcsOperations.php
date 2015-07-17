@@ -70,7 +70,7 @@ class MysqltcsOperations
      */
     public function __toString()
     {
-        return ("from: " . $this->from . "\nquotes: " . self::booleanString($this->quotes) . "\nmysqltcs:\n" . (string)$this->mysqltcs);
+        return ("from: " . $this->from . "\nquotes: " . ($this->quotes?"true":false) . "\nmysqltcs:\n" . (string)$this->mysqltcs);
     }
 
     /**
@@ -128,19 +128,6 @@ class MysqltcsOperations
     {
         $this->quotes = $quotes;
     }
-
-    /**
-     * Convert a boolean into a string
-     * @param bool $boolean
-     * @return string
-     */
-    private static function booleanString($boolean)
-    {
-        if($boolean)
-            return "true";
-        return "false";
-    }
-
 
     /**
      * get the id of the last element inserted

@@ -21,12 +21,23 @@ use it\thecsea\mysqltcs\connections\MysqlConnections;
 class MysqlConnectionsTest extends \PHPUnit_Framework_TestCase {
     public function testOneRemove()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $mysqlConnections = MysqlConnections::getInstance();
         $obj = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $mysqlConnections->getConnection($obj, $db['host'], $db['user'], $db['psw'], $db['db']);
         $mysqlConnections->removeClient($obj);
         $this->setExpectedException('\it\thecsea\mysqltcs\connections\MysqlConnectionException');
+        $mysqlConnections->removeClient($obj);
+    }
+
+    public function testOneRemoveGeneralException()
+    {
+        $db = require(__DIR__."/config.php");
+        $mysqlConnections = MysqlConnections::getInstance();
+        $obj = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
+        $mysqlConnections->getConnection($obj, $db['host'], $db['user'], $db['psw'], $db['db']);
+        $mysqlConnections->removeClient($obj);
+        $this->setExpectedException('\it\thecsea\mysqltcs\MysqltcsException');
         $mysqlConnections->removeClient($obj);
     }
 }

@@ -21,14 +21,14 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
 
     public function testOneConnection()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
         $this->assertTrue( $connection->isConnected());
     }
 
     public function testTwoNewConnection()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection2 = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
         $this->assertNotEquals($connection->getConnectionThreadId(), $connection2->getConnectionThreadId());
@@ -36,7 +36,7 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
 
     public function testTwoNoNewConnection()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db'],false);
         $connection2 = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db'], false);
         $this->assertEquals($connection->getConnectionThreadId(), $connection2->getConnectionThreadId());
@@ -44,7 +44,7 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
 
     public function testCloneConnection()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection2 = clone $connection;
         $connection3 = clone $connection;
@@ -60,7 +60,7 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testNotEquals(){
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $connection2 = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         $this->assertNotEquals($connection, $connection2);
@@ -73,7 +73,7 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
 
     public function testCloneNewConnection()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection2 = clone $connection;
         $this->assertNotEquals($connection, $connection2);
@@ -82,7 +82,7 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
 
     public function testCloneNoNewConnection()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db'],false);
         $connection2 = clone $connection;
         $this->assertNotEquals($connection, $connection2);
@@ -91,9 +91,27 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
 
     public function testToString()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new Mysqltcs($db['host'],  $db['user'], $db['psw'], $db['db']);
         $expected = ("instance number: ".$connection->getInstanceNumber()."\nhost: ".$db['host'] ."\nuser: ".$db['user'] ."\npassword: ".$db['psw']  ."\nname: ".$db['db'] ."\nkey: "."" ."\ncert: "."" ."\nca: "."\nnew conenction: "."true"."\nconnection thread id: ".$connection->getConnectionThreadId());
         $this->assertEquals((String)$connection , $expected);
+    }
+
+    /**
+     * @expectedException \it\thecsea\mysqltcs\connections\utils\MysqlUtilsException
+     */
+    public function testNoConnection()
+    {
+        $db = require(__DIR__."/config.php");
+        new Mysqltcs($db['host'],  $db['user']."wrong", $db['psw'], $db['db']);
+    }
+
+    /**
+     * @expectedException \it\thecsea\mysqltcs\MysqltcsException
+     */
+    public function testNoConnectionMainException()
+    {
+        $db = require(__DIR__."/config.php");
+        new Mysqltcs($db['host'],  $db['user']."wrong", $db['psw'], $db['db']);
     }
 }

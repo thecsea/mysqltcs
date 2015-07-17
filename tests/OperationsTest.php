@@ -26,7 +26,7 @@ class OperationsTest  extends \PHPUnit_Framework_TestCase{
 
     static public function setUpBeforeClass()
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $mysqltcs = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
         self::$connection = new MysqltcsOperations($mysqltcs, $db['tables']['test1']);
     }
@@ -143,7 +143,7 @@ class OperationsTest  extends \PHPUnit_Framework_TestCase{
 
     private function simpleChain()
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $expected = array();
         self::$connection->insert($db['tables']['test1'].".value", "'test1'");
         $expected[] = array("id"=>self::$connection->getLastId(), "value"=>"test1");

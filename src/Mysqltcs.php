@@ -200,6 +200,7 @@ class Mysqltcs
      * Get the connection according to newConnection value
      * @throws MysqlConnectionException
      */
+
     private function getConnection()
     {
         if ($this->newConnection) {

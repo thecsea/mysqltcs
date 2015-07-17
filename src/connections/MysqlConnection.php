@@ -20,7 +20,7 @@
 namespace it\thecsea\mysqltcs\connections;
 
 
-use it\thecsea\mysqltcs\connections\utilis\MysqlUtilis;
+use it\thecsea\mysqltcs\connections\utils\MysqlUtils;
 
 /**
  * Class MysqlConnection
@@ -95,7 +95,7 @@ class MysqlConnection {
     }
 
     /**
-     * @throws utilis\MysqlUtilisException
+     * @throws utils\MysqlUtilsException
      */
     public function __clone()
     {
@@ -125,13 +125,13 @@ class MysqlConnection {
     }
 
     /**
-     * @throws utilis\MysqlUtilisException
+     * @throws utils\MysqlUtilsException
      */
     public function connect() {
         if ($this->key != "" && $this->cert != "" && $this->ca != "") {
-            $this->mysqlRef = MysqlUtilis::sslConnect($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
+            $this->mysqlRef = MysqlUtils::sslConnect($this->host, $this->user, $this->password, $this->name, $this->key, $this->cert, $this->ca);
         }else {
-            $this->mysqlRef = MysqlUtilis::Connect($this->host, $this->user, $this->password, $this->name);
+            $this->mysqlRef = MysqlUtils::Connect($this->host, $this->user, $this->password, $this->name);
         }
     }
 

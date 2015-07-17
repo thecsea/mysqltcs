@@ -25,7 +25,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $db = include(__DIR__ . "/config.php");
+        $db = require(__DIR__ . "/config.php");
         $this->connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db']);
     }
     public function testSimpleExecute()
@@ -46,9 +46,13 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $logger = new SimpleLogger();
         $this->connection->setLogger($logger);
         $this->connection->executeQuery("show tables");
+        $exception = false;
         try {
             $this->connection->executeQuery("no sql");
-        }catch(MysqltcsException $e){}
+        }catch(MysqltcsException $e){
+            $exception = true;
+        }
+        $this->assertTrue($exception);
         $logA = $logger->getLogArray();//this way to keep the php 5.3 compatibility
         $this->assertEquals($logA[0], "show tables");
         $this->assertEquals(substr($logA[1],0,strlen("Mysql error")), "Mysql error");
@@ -59,9 +63,13 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $this->connection->setSimpleLogger();
         $logger = /** @var SimpleLogger */ $this->connection->getLogger();
         $this->connection->executeQuery("show tables");
+        $exception = false;
         try {
             $this->connection->executeQuery("no sql");
-        }catch(MysqltcsException $e){}
+        }catch(MysqltcsException $e){
+            $exception = true;
+        }
+        $this->assertTrue($exception);
         $logA = $logger->getLogArray();//this way to keep the php 5.3 compatibility
         $this->assertEquals($logA[0], "show tables");
         $this->assertEquals(substr($logA[1],0,strlen("Mysql error")), "Mysql error");

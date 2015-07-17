@@ -17,17 +17,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace it\thecsea\mysqltcs\connections\utilis;
+namespace it\thecsea\mysqltcs\connections\utils;
 
 
 /**
- * Class MysqlUtilis
+ * Class MysqlUtils
  * @author      Claudio Cardinale <cardi@thecsea.it>
  * @copyright   2015 claudio cardinale
  * @version     3.0-dev
- * @package it\thecsea\mysqltcs\connections\utilis
+ * @package it\thecsea\mysqltcs\connections\utils
  */
-class MysqlUtilis
+class MysqlUtils
 {
     /**
      * Init a mysqli connection over SSL
@@ -39,12 +39,12 @@ class MysqlUtilis
      * @param string $cert
      * @param string $ca
      * @return \mysqli
-     * @throws MysqlUtilisException
+     * @throws MysqlUtilsException
      */
     public static function sslConnect($host, $user, $password, $name, $key, $cert, $ca)
     {
         if ($key == "" || $cert == "" || $ca == "") {
-            throw new MysqlUtilisException("SSL parameters error");
+            throw new MysqlUtilsException("SSL parameters error");
         }
 
         $mysqliRef = mysqli_init();
@@ -59,7 +59,7 @@ class MysqlUtilis
             MYSQLI_CLIENT_SSL);
 
         if (!$connected || $mysqliRef->connect_error) {
-                    throw new MysqlUtilisException('Database connection error ('.$mysqliRef->connect_errno.') '.$mysqliRef->connect_error);
+            throw new MysqlUtilsException('Database connection error ('.$mysqliRef->connect_errno.') '.$mysqliRef->connect_error);
         }
 
         return $mysqliRef;
@@ -73,7 +73,7 @@ class MysqlUtilis
      * @param string $password
      * @param string $name
      * @return \mysqli
-     * @throws MysqlUtilisException
+     * @throws MysqlUtilsException
      */
     public static function connect($host, $user, $password, $name)
     {
@@ -85,7 +85,7 @@ class MysqlUtilis
             $name);
 
         if (!$connected || $mysqliRef->connect_error) {
-                    throw new MysqlUtilisException('Database connection error ('.$mysqliRef->connect_errno.') '.$mysqliRef->connect_error);
+            throw new MysqlUtilsException('Database connection error ('.$mysqliRef->connect_errno.') '.$mysqliRef->connect_error);
         }
 
         return $mysqliRef;

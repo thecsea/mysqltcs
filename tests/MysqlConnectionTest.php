@@ -22,7 +22,7 @@ require_once(__DIR__ . "/../vendor/autoload.php");
 class MysqlConnectionTest  extends \PHPUnit_Framework_TestCase{
     public function testToString()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $expected = ("instance number: ".$connection->getInstanceNumber()."\nhost: ".$db['host'] ."\nuser: ".$db['user'] ."\npassword: ".$db['psw']  ."\nname: ".$db['db'] ."\nkey: "."" ."\ncert: "."" ."\nca: "."");
         $this->assertEquals((String)$connection, $expected);
@@ -30,7 +30,7 @@ class MysqlConnectionTest  extends \PHPUnit_Framework_TestCase{
 
     public function testEqualsProperty()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $this->assertTrue($connection->equalsProperties($db['host'],  $db['user'], $db['psw'], $db['db']));
         $this->assertFalse($connection->equalsProperties($db['host']."NO",  $db['user'], $db['psw'], $db['db']));
@@ -38,7 +38,7 @@ class MysqlConnectionTest  extends \PHPUnit_Framework_TestCase{
 
     public function testNotEqual()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection2 = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $this->assertNotEquals($connection, $connection2);
@@ -48,7 +48,7 @@ class MysqlConnectionTest  extends \PHPUnit_Framework_TestCase{
 
     public function testCloneConnection()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection2 = clone $connection;
         $connection3 = clone $connection;
@@ -62,7 +62,7 @@ class MysqlConnectionTest  extends \PHPUnit_Framework_TestCase{
 
     public function testNoConnectClone()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection2 = clone $connection;
         $this->assertEquals($connection->getMysqli(), null);
@@ -74,7 +74,7 @@ class MysqlConnectionTest  extends \PHPUnit_Framework_TestCase{
 
     public function testConnectClone()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection->connect();
         $connection2 = clone $connection;
@@ -83,7 +83,7 @@ class MysqlConnectionTest  extends \PHPUnit_Framework_TestCase{
 
     public function testNoConnect()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection2 = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $this->assertEquals($connection->getMysqli(), null);
@@ -95,7 +95,7 @@ class MysqlConnectionTest  extends \PHPUnit_Framework_TestCase{
 
     public function testConnect()
     {
-        $db = include(__DIR__."/config.php");
+        $db = require(__DIR__."/config.php");
         $connection = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);
         $connection->connect();
         $connection2 = new MysqlConnection($db['host'],  $db['user'], $db['psw'], $db['db']);

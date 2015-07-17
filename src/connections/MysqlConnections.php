@@ -94,7 +94,7 @@ class MysqlConnections {
         //the client has already a connection
         $clientKey = array_search($client, $this->clients);
         if ($clientKey !== false) {
-                    throw new MysqlConnectionException("The client has already a connection, it must be removed before");
+            throw new MysqlConnectionException("The client has already a connection, it must be removed before");
         }
 
         //get new key
@@ -116,7 +116,7 @@ class MysqlConnections {
         //the client doesn't exist
         $clientKey = array_search($client, $this->clients);
         if ($clientKey === false) {
-                    throw new MysqlConnectionException("The client doesn't exist");
+            throw new MysqlConnectionException("The client doesn't exist");
         }
 
         //remove client

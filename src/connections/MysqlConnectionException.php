@@ -18,6 +18,7 @@
  */
 
 namespace it\thecsea\mysqltcs\connections;
+use it\thecsea\mysqltcs\MysqltcsException;
 
 
 /**
@@ -27,4 +28,4 @@ namespace it\thecsea\mysqltcs\connections;
  * @version 3.0.0-dev
  * @package     it\thecsea\mysqltcs\connections
  */
-class MysqlConnectionException extends \Exception {}
+class MysqlConnectionException extends MysqltcsException {}

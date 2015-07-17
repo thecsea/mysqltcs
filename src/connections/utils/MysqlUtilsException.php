@@ -17,17 +17,17 @@
      * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
      */
 
-namespace it\thecsea\mysqltcs\connections\utilis;
+namespace it\thecsea\mysqltcs\connections\utils;
 
 use it\thecsea\mysqltcs\connections\MysqlConnectionException;
 
 /**
- * Class MysqlUtilisException
+ * Class MysqlUtilsException
  * @author Claudio Cardinale <cardi@thecsea.it>
  * @copyright 2015 claudio cardinale
  * @version 3.0.0-dev
- * @package     it\thecsea\mysqltcs\connections\utilis
+ * @package     it\thecsea\mysqltcs\connections\utils
  */
-class MysqlUtilisException extends MysqlConnectionException
+class MysqlUtilsException extends MysqlConnectionException
 {
 }
