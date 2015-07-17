@@ -38,7 +38,7 @@ Execute the unit tests:
 1. Go in the root directory
 2. Type `phpunit` or if you have downloaded the phar `php phpunit-xxx.phar`
 
-In fact phpunit.xml contains the correcttest configuration
+In fact `phpunit.xml` contains the correcttest configuration
 
 **CAUTION**: each time tests are executed, the database must be in the initial state, like the import has just been executed (you should have a empty  table, only the db structure)
 
