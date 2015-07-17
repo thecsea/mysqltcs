@@ -29,9 +29,14 @@ Execute composer (download composer here https://getcomposer.org/)
 
 
 # Tests
-Change db data in `test/config.php`
+Change db data in `tests/config.php`
 
-Import `test/mysqltcs.sql`
+Import `tests/mysqltcs.sql`
+
+Execute the unit tests:
+
+1. Go in the root
+2. Type `phpunit` or if you have downloaded the phar `php phpunit-xxx.phar`
 
 **CAUTION**: each time tests are executed, the database must be in the initial state, like the import has just been executed (you should have a empty  table, only the db structure)
 
