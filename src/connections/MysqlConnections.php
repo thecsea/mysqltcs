@@ -135,6 +135,7 @@ class MysqlConnections {
      * @param string $cert
      * @param string $ca
      * @return MysqlConnection
+     * @throws utils\MysqlUtilsException
      */
     private function findConnection($host, $user, $password, $name, $key = "", $cert = "", $ca = "") {
         //get a new connection object to call equals
