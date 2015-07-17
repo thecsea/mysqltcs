@@ -97,10 +97,21 @@ class ConnnectionsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals((String)$connection , $expected);
     }
 
+    //with the following tests I test the exception hierarchy
+
     /**
      * @expectedException \it\thecsea\mysqltcs\connections\utils\MysqlUtilsException
      */
     public function testNoConnection()
+    {
+        $db = require(__DIR__."/config.php");
+        new Mysqltcs($db['host'],  $db['user']."wrong", $db['psw'], $db['db']);
+    }
+
+    /**
+     * @expectedException \it\thecsea\mysqltcs\connections\MysqlConnectionException
+     */
+    public function testNoConnectionExcpetion()
     {
         $db = require(__DIR__."/config.php");
         new Mysqltcs($db['host'],  $db['user']."wrong", $db['psw'], $db['db']);
