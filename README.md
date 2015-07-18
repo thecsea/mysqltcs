@@ -23,6 +23,9 @@ add the following dependence
 
 `"thecsea/mysqltcs": "dev-master"`
 
+or type:
+`composer require thecsea/mysqltcs`
+
 ##Install/Update
 Execute composer (download composer here https://getcomposer.org/)
 ###Install
