@@ -50,7 +50,7 @@ or
 
 `use it\thecsea\mysqltcs\Mysqltcs;` and `$connection = new Mystcs(...);`
 
-you can see [examples](#examples) to understand how to use library
+You can see [examples](#examples) to understand how to use library
 
 You can also take a look to [wiki](https://github.com/thecsea/mysqltcs/wiki) to see the detailed description or go to generated [phpdoc documents](http://thecsea.github.io/mysqltcs/namespaces/it.thecsea.mysqltcs.html) (documentations of all classes)
 
