@@ -21,7 +21,7 @@ add the following dependence
 
 `"thecsea/mysqltcs": "dev-master"`
 
-##Install/Updated
+##Install/Update
 Execute composer (download composer here https://getcomposer.org/)
 ###Install
 
@@ -43,19 +43,30 @@ or
 
 `use it\thecsea\mysqltcs\Mysqltcs;` and `$connection = new Mystcs(...);`
 
+you can see [examples](#examples) to understand how to use library
 
 # Tests
-Change db data in `tests/config.php`
+Mysqltcs is tested with automatic test: phpunit test. So we have a good chance of not having errors, but not the 
+certainty.
+But we have covered the following percentage of statements with tests: [![Code Coverage](https://scrutinizer-ci.com/g/thecsea/mysqltcs/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/thecsea/mysqltcs/?branch=master)
 
-Import `tests/mysqltcs.sql`
-
-Execute the unit tests:
+* Change db data in `tests/config.php`
+* Import `tests/mysqltcs.sql`
+* Execute the unit tests:
 
 1. Go in the root directory
 2. Type `phpunit` or if you have downloaded the phar `php phpunit-xxx.phar`
 
-In fact `phpunit.xml` contains the correcttest configuration
+In fact `phpunit.xml` contains the correct test configuration
 
 **CAUTION**: each time tests are executed, the database must be in the initial state, like the import has just been executed (you should have a empty  table, only the db structure)
+
+#Examples
+You can find some examples under `examples` to run it:
+
+* Change db data in `examples/config.php`
+* Import `examples/mysqltcs.sql`
+
+There is a simple example  `simpleExample.php` that shows you how to use the library in the simplest way
 
 # By [thecsea.it](http://www.thecsea.it)
