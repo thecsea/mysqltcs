@@ -21,7 +21,7 @@ use it\thecsea\mysqltcs\Mysqltcs;
 require_once(__DIR__."/../vendor/autoload.php");
 $db = require(__DIR__."/config.php");
 
-print "create two connections<br>\n";
+print "create two connections with same aprameters (you have to set to false the parameter number 5)<br>\n";
 $connection = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db'],false);
 $connection2 = new Mysqltcs($db['host'], $db['user'], $db['psw'], $db['db'],false);
 
