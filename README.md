@@ -46,6 +46,10 @@ or
 you can see [examples](#examples) to understand how to use library
 
 # Tests
+Mysqltcs is tested with automatic test: phpunit test. So we have a good chance of not having errors, but not the 
+certainty.
+But we have covered the following percentage of statements with tests: [![Code Coverage](https://scrutinizer-ci.com/g/thecsea/mysqltcs/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/thecsea/mysqltcs/?branch=master)
+
 * Change db data in `tests/config.php`
 * Import `tests/mysqltcs.sql`
 * Execute the unit tests:
