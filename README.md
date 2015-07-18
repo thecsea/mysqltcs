@@ -5,7 +5,7 @@ Build status: [![Build Status](https://travis-ci.org/thecsea/mysqltcs.svg?branch
 A simple and powerful library for mysql written in php:
 
 * You can use the same db connection in more than one instances (optimizing mysql physical connections)
-* This library allow you to make common database operations immediately, returning simple data structures
+* This library allow you to make common database operations immediately and efficiently, returning simple data structures
 * Log all actions performed on db
 * All mysql error as exception
 * Clone support
