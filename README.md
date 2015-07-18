@@ -20,25 +20,34 @@ Clone repository
 `git clone https://github.com/thecsea/mysqltcs.git`
 
 ### via composer
-add the following dependence 
+download composer here https://getcomposer.org/
+
+add the following dependence in `composer.json`
 
 `"thecsea/mysqltcs": "3.0.*"`
 
 or type
 
-`composer require thecsea/mysqltcs`
+`php composer.phar require thecsea/mysqltcs`
 
 ##Install/Update
-Execute composer (download composer here https://getcomposer.org/)
-###Install
+Update composer (download composer here https://getcomposer.org/)
+
+`php composer.phar self-update`
+
+Followings commands must be executed in project root directory
+
+###Install mysqltcs
 
 `php composer.phar install`
 
-###Update
+###Update mysqltcs
+
+You can perform an updated if you have added mysqltcs as composer dependency
 
 `php composer.phar update`
 
-you have to perform an update when a new version is released
+You have to perform an update when a new version is released
 
 ##How to use
 
