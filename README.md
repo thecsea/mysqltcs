@@ -2,7 +2,7 @@
 Build status: [![Build Status](https://travis-ci.org/thecsea/mysqltcs.svg?branch=master)](https://travis-ci.org/thecsea/mysqltcs) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecsea/mysqltcs/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thecsea/mysqltcs/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/thecsea/mysqltcs/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/thecsea/mysqltcs/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/thecsea/mysqltcs/badges/build.png?b=master)](https://scrutinizer-ci.com/g/thecsea/mysqltcs/build-status/master) [![Latest Stable Version](https://poser.pugx.org/thecsea/mysqltcs/v/stable)](https://packagist.org/packages/thecsea/mysqltcs) [![Total Downloads](https://poser.pugx.org/thecsea/mysqltcs/downloads)](https://packagist.org/packages/thecsea/mysqltcs) [![Latest Unstable Version](https://poser.pugx.org/thecsea/mysqltcs/v/unstable)](https://packagist.org/packages/thecsea/mysqltcs) [![License](https://poser.pugx.org/thecsea/mysqltcs/license)](https://packagist.org/packages/thecsea/mysqltcs)
 
 
-A simple and powerful library for mysql written in php:
+The simplest and the most powerful library for mysql written in php:
 
 * You can use the same db connection in more than one instances (optimizing mysql physical connections)
 * This library allow you to make common database operations immediately and efficiently, returning simple data structures
