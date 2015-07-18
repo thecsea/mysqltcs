@@ -2,7 +2,7 @@
   "name": "thecsea/mysqltcs",
   "type": "library",
   "keywords": ["mysql","optimized", "simple", "powerful", "efficient"],
-  "description": "A simple and powerful library to access to a mysql database, optimizing the connections and allowing you to perform common database actions immediately an efficiently",
+  "description": "A simple and powerful library to access to a mysql database, optimizing the connections and allowing you to perform common database actions immediately and efficiently",
   "homepage": "http://github.com/thecsea/mysqltcs/",
   "minimum-stability": "stable",
   "license": "GPL-2.0",
