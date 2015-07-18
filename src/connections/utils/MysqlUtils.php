@@ -23,8 +23,8 @@ namespace it\thecsea\mysqltcs\connections\utils;
 /**
  * Class MysqlUtils
  * @author      Claudio Cardinale <cardi@thecsea.it>
- * @copyright   2015 claudio cardinale
- * @version     3.0-dev
+ * @copyright   2015 Claudio Cardinale
+ * @version     3.0.0
  * @package it\thecsea\mysqltcs\connections\utils
  */
 class MysqlUtils

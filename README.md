@@ -22,7 +22,7 @@ Clone repository
 ### via composer
 add the following dependence 
 
-`"thecsea/mysqltcs": "dev-master"`
+`"thecsea/mysqltcs": "3.0.*"`
 
 or type
 

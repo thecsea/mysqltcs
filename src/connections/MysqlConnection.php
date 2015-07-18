@@ -26,8 +26,8 @@ use it\thecsea\mysqltcs\connections\utils\MysqlUtils;
  * Class MysqlConnection
  * this class manage a single mysql connection calling the php mysql functions
  * @author Claudio Cardinale <cardi@thecsea.it>
- * @copyright 2015 claudio cardinale
- * @version 3.0.0-dev
+ * @copyright 2015 Claudio Cardinale
+ * @version 3.0.0
  * @package     it\thecsea\mysqltcs\connections
  */
 class MysqlConnection {

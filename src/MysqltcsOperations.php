@@ -24,8 +24,8 @@ namespace it\thecsea\mysqltcs;
  * This class allow you to perform efficiently common tasks like a simple insert
  * you have to instance this passing a Mysqltcs connection instantiated before
  * @author Claudio Cardinale <cardi@thecsea.it>
- * @copyright 2015 ClaudioCardinale
- * @version 3.0.0-dev
+ * @copyright 2015 Claudio Cardinale
+ * @version 3.0.0
  * @package it\thecsea\mysqltcs
  */
 class MysqltcsOperations

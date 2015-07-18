@@ -30,8 +30,8 @@ use it\thecsea\mysqltcs\connections\MysqlConnections;
  * If you want to perform efficiently common tasks like a simple insert you can instance
  * MysqlOperations passing the connection instantiated before
  * @author Claudio Cardinale <cardi@thecsea.it>
- * @copyright 2015 ClaudioCardinale
- * @version 3.0.0-dev
+ * @copyright 2015 Claudio Cardinale
+ * @version 3.0.0
  * @package it\thecsea\mysqltcs
  */
 class Mysqltcs
