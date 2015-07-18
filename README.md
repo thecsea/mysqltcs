@@ -87,4 +87,6 @@ You can find some examples under `examples` to run it:
 
 There is a simple example  `simpleExample.php` that shows you how to use the library in the simplest way
 
+N.B. if you have added mysqltcs as composer dependency you will find example under `vendor/thecsea/mysqltcs/examples`
+
 # By [thecsea.it](http://www.thecsea.it)
