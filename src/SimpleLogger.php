@@ -57,7 +57,7 @@ class SimpleLogger implements MysqltcsLogger
     }
 
     /**
-     * @return String
+     * @return array
      */
     public function getLogArray()
     {

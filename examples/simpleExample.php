@@ -46,10 +46,10 @@ try {
 
 
 print "<h2>Simple query</h2>\n";
-print "<h3>Correct query(show databases)</h3>\n";
+print "<h3>Correct query(show tables)</h3>\n";
 
 //simple query
-$results = $connection->executeQuery("show databases");
+$results = $connection->executeQuery("show tables");
 while ($row = $results->fetch_array()) {
     print $row[0]."<br/>\n";
 }
