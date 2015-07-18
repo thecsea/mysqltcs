@@ -43,7 +43,7 @@ or
 
 `use it\thecsea\mysqltcs\Mysqltcs;` and `$connection = new Mystcs(...);`
 
-you can see [tests](#tests) to understand how to use library
+you can see [examples](#examples) to understand how to use library
 
 # Tests
 * Change db data in `tests/config.php`
