@@ -12,8 +12,8 @@ namespace it\thecsea\mysqltcs;
 /**
  * Interface MysqltcsLogger
  * @author Claudio Cardinale <cardi@thecsea.it>
- * @copyright 2015 ClaudioCardinale
- * @version 3.0.0-dev
+ * @copyright 2015 Claudio Cardinale
+ * @version 3.0.0
  * @package it\thecsea\mysqltcs
  */
 interface MysqltcsLogger {
