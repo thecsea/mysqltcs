@@ -43,19 +43,26 @@ or
 
 `use it\thecsea\mysqltcs\Mysqltcs;` and `$connection = new Mystcs(...);`
 
+you can see [tests](#tests) to understand how to use library
 
 # Tests
-Change db data in `tests/config.php`
-
-Import `tests/mysqltcs.sql`
-
-Execute the unit tests:
+* Change db data in `tests/config.php`
+* Import `tests/mysqltcs.sql`
+* Execute the unit tests:
 
 1. Go in the root directory
 2. Type `phpunit` or if you have downloaded the phar `php phpunit-xxx.phar`
 
-In fact `phpunit.xml` contains the correcttest configuration
+In fact `phpunit.xml` contains the correct test configuration
 
 **CAUTION**: each time tests are executed, the database must be in the initial state, like the import has just been executed (you should have a empty  table, only the db structure)
+
+#Examples
+You can find some examples under `examples` to run it:
+
+* Change db data in `examples/config.php`
+* Import `examples/mysqltcs.sql`
+
+There is a simple example  `simpleExample.php` that shows you how to use the library in the simplest way
 
 # By [thecsea.it](http://www.thecsea.it)
