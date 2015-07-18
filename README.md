@@ -47,6 +47,8 @@ or
 
 you can see [examples](#examples) to understand how to use library
 
+You can also take a look to [wiki](https://github.com/thecsea/mysqltcs/wiki) to see the detailed description
+
 # Tests
 Mysqltcs is tested with automatic test: phpunit test. So we have a good chance of not having errors, but not the 
 certainty.
