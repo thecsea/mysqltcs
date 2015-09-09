@@ -25,7 +25,7 @@ namespace it\thecsea\mysqltcs;
  * you have to instance this passing a Mysqltcs connection instantiated before
  * @author Claudio Cardinale <cardi@thecsea.it>
  * @copyright 2015 Claudio Cardinale
- * @version 3.0.0
+ * @version 3.0.4
  * @package it\thecsea\mysqltcs
  */
 class MysqltcsOperations
@@ -60,6 +60,21 @@ class MysqltcsOperations
         $this->mysqltcs = $mysqltcs;
         $this->from = $defaultFrom;
         $this->quotes = $defaultQuotes;
+
+        self::mysqltcsCheck($mysqltcs);
+    }
+
+    /**
+     * return exception if mysqltcs passed is not valid
+     * @param Mysqltcs $mysqltcs
+     * @throws MysqltcsException
+     */
+    private static function mysqltcsCheck(Mysqltcs $mysqltcs)
+    {
+        if($mysqltcs == null || !($mysqltcs instanceof Mysqltcs)) {
+            throw new MysqltcsException("mysqltcs passed is not an instance of Mysqltcs");
+        }
+
         if (!$mysqltcs->isConnected()) {
             throw new MysqltcsException("mysqltcs passed is not connected");
         }
@@ -90,10 +105,13 @@ class MysqltcsOperations
 
     /**
      * @param Mysqltcs $mysqltcs
+     * @throws MysqltcsException
      */
-    public function setMysqltcs($mysqltcs)
+    public function setMysqltcs(Mysqltcs $mysqltcs)
     {
         $this->mysqltcs = $mysqltcs;
+
+        self::mysqltcsCheck($mysqltcs);
     }
 
     /**
