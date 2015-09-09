@@ -65,7 +65,7 @@ class MysqltcsOperations
     }
 
     /**
-     * return exception if mysqltcs passed is not valid
+     * throw exception if mysqltcs passed is not valid
      * @param Mysqltcs $mysqltcs
      * @throws MysqltcsException
      */
