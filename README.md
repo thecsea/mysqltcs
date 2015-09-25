@@ -57,7 +57,7 @@ When composer installation is finished you will see `vendor/autoload.php` that i
 
 or
 
-`use it\thecsea\mysqltcs\Mysqltcs;` and `$connection = new Mystcs(...);`
+`use it\thecsea\mysqltcs\Mysqltcs;` and `$connection = new Mysqltcs(...);`
 
 You can see [examples](#examples) to understand how to use library
 
