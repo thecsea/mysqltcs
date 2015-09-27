@@ -102,7 +102,7 @@ class Mysqltcs
      * @param String $host
      * @param String $user
      * @param String $password
-     * @param String $name
+     * @param String $name database name
      * @param bool $newConnection optional, default true. If it is false the class uses an already open connection if it possible
      * @param string $key optional
      * @param string $cert optional
