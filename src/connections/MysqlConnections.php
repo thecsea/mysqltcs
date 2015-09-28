@@ -141,7 +141,7 @@ class MysqlConnections {
         //get a new connection object to call equals
         $newConnection = new MysqlConnection($host, $user, $password, $name, $key, $cert, $ca);
         //search a connection
-        foreach ($this->connections as /** @var MysqlConnection */ $connection) {
+        foreach ($this->connections as /** @var MysqlConnection $Connection*/ $connection) {
             if ($connection->equals($newConnection)) {
                             return $connection;
             }
