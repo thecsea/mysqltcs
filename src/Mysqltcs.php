@@ -284,4 +284,50 @@ class Mysqltcs
             return $results;
         }
     }
+
+    /**
+     * Set autocommit
+     * @param boolean $autocommit
+     * @throws MysqltcsException on error
+     */
+    public function setAutocommit($autocommit)
+    {
+        if($this->mysqliRef->autocommit($autocommit)) {
+            $this->log("autocommit set to ".($autocommit?"true":"false"));
+            return;
+        }
+        $mex = "Mysql error: it is not possible set autocommit to ".($autocommit?"true":"false"). " state. ".$this->mysqliRef->error;
+        $this->log($mex);
+        throw new MysqltcsException($mex);
+    }
+
+    /**
+     * Commit the transaction
+     * @throws MysqltcsException on commit error
+     */
+    public function commit()
+    {
+        if($this->mysqliRef->commit()) {
+            $this->log("commit");
+            return;
+        }
+        $mex = "Mysql error: it is not possible perform the commit. ".$this->mysqliRef->error;
+        $this->log($mex);
+        throw new MysqltcsException($mex);
+    }
+
+    /**
+     * Rollback (abort) the transaction
+     * @throws MysqltcsException on rollback error
+     */
+    public function rollBack()
+    {
+        if($this->mysqliRef->rollback()) {
+            $this->log("rollback");
+            return;
+        }
+        $mex = "Mysql error: it is not possible perform the rollback. ".$this->mysqliRef->error;
+        $this->log($mex);
+        throw new MysqltcsException($mex);
+    }
 }

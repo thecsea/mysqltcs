@@ -9,6 +9,7 @@ The simplest and the most powerful library for mysql written in php:
 * Log all actions performed on db
 * All mysql error as exception
 * Clone support
+* Transactions support
 
 # Download, install and use
 
@@ -86,6 +87,8 @@ You can find some examples under `examples` to run it:
 * Import `examples/mysqltcs.sql`
 
 There is a simple example  `simpleExample.php` that shows you how to use the library in the simplest way
+
+There are not examples about transactions yet (you have to remember to set autocommit to true after using transactions)
 
 N.B. if you have added mysqltcs as composer dependency you will find example under `vendor/thecsea/mysqltcs/examples`
 
